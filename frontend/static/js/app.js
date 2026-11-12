@@ -1,6 +1,7 @@
 /**
- * EduPulse Analytics - Core Frontend Controller
- * Enterprise NLP Feedback Intelligence Platform
+ * EduPulse™ AI — Enterprise Frontend Controller
+ * Design System: Linear / Stripe / Apple Inspired
+ * Multi-Role Access Control, Real-Time Telemetry & NLP Execution Engine
  */
 
 // Application Global State
@@ -24,12 +25,59 @@ let collectionIssuesChartInstance = null;
 document.addEventListener("DOMContentLoaded", async () => {
     setupCharCounters();
     setupBatchDragDrop();
+    setupKeyboardShortcuts();
     await checkAuthSession();
     
     // Load initial views
     loadDashboardData();
     runPdfMixedBenchmark();
 });
+
+// ============================================================================
+// GLOBAL KEYBOARD SHORTCUTS
+// ============================================================================
+function setupKeyboardShortcuts() {
+    document.addEventListener("keydown", (e) => {
+        // Do not trigger hotkeys if user is currently typing in an input/textarea
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+        const isEditing = activeTag === "input" || activeTag === "textarea" || activeTag === "select";
+
+        if (e.key === "Escape") {
+            closeAuthModal();
+            closeDetailModal();
+            closeStatusModal();
+            closeDeleteModal();
+            closeSettingsModal();
+            return;
+        }
+
+        if (!isEditing) {
+            // 'B' key triggers 1-Click PDF Benchmark
+            if (e.key === "b" || e.key === "B") {
+                e.preventDefault();
+                runPdfMixedBenchmark();
+                return;
+            }
+            // '/' key focuses global search
+            if (e.key === "/") {
+                e.preventDefault();
+                focusGlobalSearch();
+                return;
+            }
+        }
+    });
+}
+
+function focusGlobalSearch() {
+    switchTab("records");
+    setTimeout(() => {
+        const input = document.getElementById("recSearchInput");
+        if (input) {
+            input.focus();
+            input.select();
+        }
+    }, 100);
+}
 
 // ============================================================================
 // TOAST NOTIFICATION SYSTEM
@@ -41,13 +89,13 @@ function showToast(type, title, message) {
     const toast = document.createElement("div");
     toast.className = "toast-item";
 
-    let iconHtml = '<i class="fa-solid fa-circle-info text-indigo-600 text-base mt-0.5 mr-3 shrink-0"></i>';
+    let iconHtml = '<i class="fa-solid fa-circle-info text-indigo-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
     if (type === "success") {
-        iconHtml = '<i class="fa-solid fa-circle-check text-emerald-600 text-base mt-0.5 mr-3 shrink-0"></i>';
+        iconHtml = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
     } else if (type === "error") {
-        iconHtml = '<i class="fa-solid fa-circle-xmark text-rose-600 text-base mt-0.5 mr-3 shrink-0"></i>';
+        iconHtml = '<i class="fa-solid fa-circle-xmark text-rose-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
     } else if (type === "warning") {
-        iconHtml = '<i class="fa-solid fa-triangle-exclamation text-amber-500 text-base mt-0.5 mr-3 shrink-0"></i>';
+        iconHtml = '<i class="fa-solid fa-triangle-exclamation text-amber-500 text-sm mt-0.5 mr-3 shrink-0"></i>';
     }
 
     toast.innerHTML = `
@@ -63,13 +111,13 @@ function showToast(type, title, message) {
 
     container.appendChild(toast);
 
-    // Auto dismiss after 4.5 seconds
+    // Auto dismiss after 4 seconds
     setTimeout(() => {
         if (toast.parentElement) {
             toast.classList.add("leaving");
             setTimeout(() => toast.remove(), 250);
         }
-    }, 4500);
+    }, 4000);
 }
 
 // ============================================================================
@@ -126,7 +174,7 @@ function toggleMobileSidebar() {
 }
 
 // ============================================================================
-// AUTHENTICATION SUBSYSTEM
+// AUTHENTICATION & USER PROFILE SUBSYSTEM
 // ============================================================================
 async function checkAuthSession() {
     try {
@@ -157,13 +205,6 @@ function renderAuthUserUI() {
     
     const roleBadge = document.getElementById("userRoleBadge");
     roleBadge.textContent = currentUser.role || "student";
-    if (currentUser.role === "admin") {
-        roleBadge.className = "text-[10px] font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 px-1.5 py-0.2 rounded border border-rose-200";
-    } else if (currentUser.role === "faculty") {
-        roleBadge.className = "text-[10px] font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200";
-    } else {
-        roleBadge.className = "text-[10px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200";
-    }
 }
 
 function renderUnauthUI() {
@@ -191,14 +232,14 @@ function setAuthTab(tab) {
     if (tab === "login") {
         loginForm.classList.remove("hidden");
         regForm.classList.add("hidden");
-        tabLogin.className = "flex-1 py-2.5 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
-        tabReg.className = "flex-1 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
-        document.getElementById("authModalTitle").textContent = "Sign In to EduPulse";
+        tabLogin.className = "flex-1 py-2 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
+        tabReg.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        document.getElementById("authModalTitle").textContent = "Sign In to EduPulse™ AI";
     } else {
         loginForm.classList.add("hidden");
         regForm.classList.remove("hidden");
-        tabReg.className = "flex-1 py-2.5 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
-        tabLogin.className = "flex-1 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        tabReg.className = "flex-1 py-2 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
+        tabLogin.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
         document.getElementById("authModalTitle").textContent = "Create an Account";
     }
 }
@@ -226,10 +267,10 @@ async function handleLoginSubmit(event) {
         currentUser = data.user;
         renderAuthUserUI();
         closeAuthModal();
-        showToast("success", "Authentication Successful", `Welcome back, ${currentUser.full_name || currentUser.username}!`);
+        showToast("success", "Welcome Back", `Signed in as ${currentUser.full_name || currentUser.username}`);
         loadDashboardData();
     } catch (e) {
-        showToast("error", "Sign In Error", e.message);
+        showToast("error", "Sign In Failed", e.message);
     } finally {
         btn.innerHTML = origText;
         btn.disabled = false;
@@ -262,7 +303,7 @@ async function handleRegisterSubmit(event) {
         currentUser = data.user;
         renderAuthUserUI();
         closeAuthModal();
-        showToast("success", "Account Created", `Account for ${username} created successfully!`);
+        showToast("success", "Account Created", `Welcome to EduPulse™ AI, ${username}!`);
         loadDashboardData();
     } catch (e) {
         showToast("error", "Registration Error", e.message);
@@ -277,9 +318,54 @@ async function logoutUser() {
         await fetch("/api/auth/logout", { method: "POST" });
         currentUser = null;
         renderUnauthUI();
-        showToast("info", "Session Closed", "You have been logged out.");
+        showToast("info", "Session Terminated", "You have signed out.");
     } catch (e) {
         console.error("Logout failed:", e);
+    }
+}
+
+// User Settings Modal
+function openSettingsModal() {
+    if (!currentUser) {
+        openAuthModal('login');
+        return;
+    }
+
+    document.getElementById("setModalName").textContent = currentUser.full_name || currentUser.username;
+    document.getElementById("setModalUsername").textContent = `@${currentUser.username}`;
+    document.getElementById("setModalRole").textContent = currentUser.role || "student";
+    document.getElementById("setModalAvatar").textContent = (currentUser.username || "U").charAt(0).toUpperCase();
+
+    document.getElementById("setEditName").value = currentUser.full_name || "";
+    document.getElementById("setEditDept").value = currentUser.department || "";
+
+    document.getElementById("settingsModal").classList.remove("hidden");
+}
+
+function closeSettingsModal() {
+    document.getElementById("settingsModal").classList.add("hidden");
+}
+
+async function saveProfileChanges() {
+    const full_name = document.getElementById("setEditName").value.trim();
+    const department = document.getElementById("setEditDept").value.trim();
+
+    try {
+        const res = await fetch("/api/auth/profile", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ full_name, department })
+        });
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Failed to update profile");
+
+        currentUser = data.user;
+        renderAuthUserUI();
+        closeSettingsModal();
+        showToast("success", "Profile Updated", "Your profile details have been saved.");
+    } catch (e) {
+        showToast("error", "Profile Update Error", e.message);
     }
 }
 
@@ -371,13 +457,13 @@ function renderPdfOutput(report, originalText) {
     sentBadge.textContent = sentiment;
 
     if (sentiment === "Positive") {
-        sentBadge.className = "ml-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300";
+        sentBadge.className = "ml-2.5 px-3 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300";
     } else if (sentiment === "Negative") {
-        sentBadge.className = "ml-2 px-3 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800 border border-rose-300";
+        sentBadge.className = "ml-2.5 px-3 py-0.5 text-xs font-bold rounded-full bg-rose-100 text-rose-800 border border-rose-300";
     } else if (sentiment === "Mixed") {
-        sentBadge.className = "ml-2 px-3 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800 border border-amber-300";
+        sentBadge.className = "ml-2.5 px-3 py-0.5 text-xs font-bold rounded-full bg-amber-100 text-amber-800 border border-amber-300";
     } else {
-        sentBadge.className = "ml-2 px-3 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-800 border border-slate-300";
+        sentBadge.className = "ml-2.5 px-3 py-0.5 text-xs font-bold rounded-full bg-slate-100 text-slate-800 border border-slate-300";
     }
 
     const conf = report.confidence ? (report.confidence * 100).toFixed(1) : "88.5";
@@ -427,7 +513,7 @@ function renderPdfOutput(report, originalText) {
 function setRating(rating) {
     document.getElementById("subRating").value = rating;
     const stars = document.querySelectorAll("#starRatingWidget .star-btn i");
-    const labels = ["", "1 Star (Poor)", "2 Stars (Fair)", "3 Stars (Average)", "4 Stars (Good)", "5 Stars (Excellent)"];
+    const labels = ["", "1 Star (Critical Issues)", "2 Stars (Fair)", "3 Stars (Average)", "4 Stars (Good)", "5 Stars (Outstanding)"];
     
     stars.forEach((star, index) => {
         if (index < rating) {
@@ -475,7 +561,7 @@ async function handleFeedbackSubmit(event) {
         showToast("success", "Feedback Recorded!", `Record #${data.record_id} saved. Sentiment: ${data.analysis.overall_sentiment}`);
         resetSubmitForm();
         
-        // Auto refresh dashboard and switch to records view
+        // Refresh dashboard and switch to records view
         loadDashboardData();
         switchTab("records");
     } catch (e) {
@@ -493,7 +579,7 @@ function debounceRecordsSearch() {
     clearTimeout(searchDebounceTimer);
     searchDebounceTimer = setTimeout(() => {
         loadRecords(1);
-    }, 300);
+    }, 280);
 }
 
 async function loadRecords(page = 1) {
@@ -537,7 +623,7 @@ function renderRecordsTable(data) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="8" class="p-10 text-center">
-                    <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto text-lg mb-2">
+                    <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto text-lg mb-2 shadow-xs">
                         <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <p class="text-xs font-bold text-slate-700">No matching feedback records found</p>
@@ -552,7 +638,6 @@ function renderRecordsTable(data) {
 
     data.records.forEach(rec => {
         const tr = document.createElement("tr");
-        tr.className = "table-row-hover";
 
         // Sentiment badge
         let sentClass = "badge-neutral";
@@ -572,23 +657,23 @@ function renderRecordsTable(data) {
         else if (rec.status === "Resolved") statusClass = "badge-status-resolved";
 
         tr.innerHTML = `
-            <td class="p-3.5 font-mono text-slate-500 font-semibold">#${rec.id}</td>
-            <td class="p-3.5 font-medium text-slate-900 truncate max-w-[140px]" title="${rec.department}">${rec.department}</td>
-            <td class="p-3.5 max-w-xs text-slate-700">
+            <td class="font-mono text-slate-400 font-semibold">#${rec.id}</td>
+            <td class="font-medium text-slate-900 truncate max-w-[140px]" title="${rec.department}">${rec.department}</td>
+            <td class="max-w-xs text-slate-700">
                 <p class="truncate" title="${rec.feedback_text}">${rec.feedback_text}</p>
                 <span class="text-[10px] text-slate-400 font-mono">${rec.student_name} &bull; ${rec.course || "General"}</span>
             </td>
-            <td class="p-3.5">
-                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${sentClass}">${rec.sentiment}</span>
+            <td>
+                <span class="badge-pill ${sentClass}">${rec.sentiment}</span>
             </td>
-            <td class="p-3.5 text-slate-600 font-medium truncate max-w-[100px]">${rec.aspect || "General"}</td>
-            <td class="p-3.5">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${urgClass}">${rec.urgency || "Low"}</span>
+            <td class="text-slate-600 font-medium truncate max-w-[100px]">${rec.aspect || "General"}</td>
+            <td>
+                <span class="badge-pill ${urgClass}">${rec.urgency || "Low"}</span>
             </td>
-            <td class="p-3.5">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${statusClass}">${rec.status || "New"}</span>
+            <td>
+                <span class="badge-pill ${statusClass}">${rec.status || "New"}</span>
             </td>
-            <td class="p-3.5 text-right space-x-1 shrink-0">
+            <td class="text-right space-x-1 shrink-0">
                 <button onclick="viewRecordDetail(${rec.id})" title="View Details" class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
                     <i class="fa-solid fa-eye"></i>
                 </button>
@@ -667,11 +752,11 @@ async function viewRecordDetail(recordId) {
         let aspectsHtml = "";
         if (aspects.length > 0) {
             aspects.forEach(a => {
-                const polClass = a.polarity === "Positive" ? "bg-emerald-100 text-emerald-800" : (a.polarity === "Negative" ? "bg-rose-100 text-rose-800" : "bg-slate-100 text-slate-800");
+                const polClass = a.polarity === "Positive" ? "badge-positive" : (a.polarity === "Negative" ? "badge-negative" : "badge-neutral");
                 aspectsHtml += `
                     <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs">
                         <span class="font-bold text-slate-900">${a.aspect}</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${polClass}">${a.polarity}</span>
+                        <span class="badge-pill ${polClass}">${a.polarity}</span>
                     </div>
                 `;
             });
@@ -734,7 +819,7 @@ async function viewRecordDetail(recordId) {
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1 text-xs">
                 <div class="flex justify-between items-center">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Reviewer Notes & Action Items</span>
-                    <span class="text-[10px] text-slate-400">Assignee: ${rec.assigned_to || "Unassigned"}</span>
+                    <span class="text-[10px] text-slate-400 font-mono">Assignee: ${rec.assigned_to || "Unassigned"}</span>
                 </div>
                 <p class="text-slate-700 italic">${rec.review_notes || "No review notes attached yet."}</p>
             </div>
@@ -907,7 +992,7 @@ function renderDashSentimentChart(data) {
                     counts.Mixed || 0
                 ],
                 backgroundColor: ['#059669', '#64748b', '#dc2626', '#d97706'],
-                borderWidth: 3,
+                borderWidth: 2,
                 borderColor: '#ffffff'
             }]
         },
@@ -916,7 +1001,7 @@ function renderDashSentimentChart(data) {
             maintainAspectRatio: false,
             cutout: '72%',
             plugins: {
-                legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11, family: 'Inter' } } }
+                legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' } } }
             }
         }
     });
@@ -939,8 +1024,8 @@ function renderDashIssuesChart(data) {
             datasets: [{
                 label: 'Complaints Reported',
                 data: values,
-                backgroundColor: '#4338ca',
-                borderRadius: 6
+                backgroundColor: '#4f46e5',
+                borderRadius: 4
             }]
         },
         options: {
@@ -980,7 +1065,7 @@ function renderDashDeptChart(data) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11, family: 'Inter' } } }
+                legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' } } }
             },
             scales: {
                 x: { grid: { display: false }, ticks: { font: { size: 10, family: 'Inter' } } },
@@ -1002,7 +1087,6 @@ function renderDashRecentRows(records) {
 
     records.forEach(rec => {
         const tr = document.createElement("tr");
-        tr.className = "hover:bg-slate-50 transition";
 
         let sentBadge = "badge-neutral";
         if (rec.sentiment === "Positive") sentBadge = "badge-positive";
@@ -1010,14 +1094,14 @@ function renderDashRecentRows(records) {
         else if (rec.sentiment === "Mixed") sentBadge = "badge-mixed";
 
         tr.innerHTML = `
-            <td class="p-3.5 font-mono text-slate-500 font-semibold">#${rec.id}</td>
-            <td class="p-3.5 font-medium text-slate-900">${rec.student_name} <span class="text-slate-400 text-[10px]">(${rec.department})</span></td>
-            <td class="p-3.5 max-w-xs truncate text-slate-700" title="${rec.feedback_text}">${rec.feedback_text}</td>
-            <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${sentBadge}">${rec.sentiment}</span></td>
-            <td class="p-3.5 text-slate-600">${rec.aspect || "General"}</td>
-            <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">${rec.status || "New"}</span></td>
-            <td class="p-3.5 text-right">
-                <button onclick="viewRecordDetail(${rec.id})" class="text-indigo-600 hover:text-indigo-800 font-semibold text-xs">View &rarr;</button>
+            <td class="font-mono text-slate-400 font-semibold">#${rec.id}</td>
+            <td class="font-medium text-slate-900">${rec.student_name} <span class="text-slate-400 text-[10px]">(${rec.department})</span></td>
+            <td class="max-w-xs truncate text-slate-700" title="${rec.feedback_text}">${rec.feedback_text}</td>
+            <td><span class="badge-pill ${sentBadge}">${rec.sentiment}</span></td>
+            <td class="text-slate-600 font-medium">${rec.aspect || "General"}</td>
+            <td><span class="badge-pill badge-neutral font-medium">${rec.status || "New"}</span></td>
+            <td class="text-right">
+                <button onclick="viewRecordDetail(${rec.id})" class="text-indigo-600 hover:text-indigo-800 font-semibold text-xs transition">View &rarr;</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -1097,7 +1181,7 @@ function renderCollectionCharts(data) {
                 datasets: [{
                     label: 'Complaints Reported',
                     data: values,
-                    backgroundColor: '#4338ca',
+                    backgroundColor: '#4f46e5',
                     borderRadius: 4
                 }]
             },
@@ -1200,18 +1284,17 @@ function renderBatchTable(data) {
 
     data.records_preview.forEach(row => {
         const tr = document.createElement("tr");
-        tr.className = "hover:bg-slate-50 transition";
 
         const polClass = row.Classified_Polarity === "Positive"
             ? "text-emerald-700 font-bold"
             : (row.Classified_Polarity === "Negative" ? "text-rose-700 font-bold" : "text-amber-700 font-bold");
 
         tr.innerHTML = `
-            <td class="p-3 max-w-xs truncate text-slate-900" title="${row.Raw_Feedback}">${row.Raw_Feedback}</td>
-            <td class="p-3 ${polClass}">${row.Classified_Polarity}</td>
-            <td class="p-3 font-mono text-[11px]">${row.Confidence}</td>
-            <td class="p-3 font-semibold text-slate-800">${row.Primary_Aspect}</td>
-            <td class="p-3 text-slate-600">${row.Identified_Grievance}</td>
+            <td class="max-w-xs truncate text-slate-900" title="${row.Raw_Feedback}">${row.Raw_Feedback}</td>
+            <td class="${polClass}">${row.Classified_Polarity}</td>
+            <td class="font-mono text-[11px]">${row.Confidence}</td>
+            <td class="font-semibold text-slate-800">${row.Primary_Aspect}</td>
+            <td class="text-slate-600">${row.Identified_Grievance}</td>
         `;
         tbody.appendChild(tr);
     });
@@ -1241,15 +1324,14 @@ async function loadAuditLogs() {
 
         logsList.forEach(log => {
             const tr = document.createElement("tr");
-            tr.className = "hover:bg-slate-50 transition";
             tr.innerHTML = `
-                <td class="p-3.5 font-mono text-slate-400">#${log.id}</td>
-                <td class="p-3.5 font-mono text-[11px] text-slate-500">${log.timestamp}</td>
-                <td class="p-3.5">
-                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-800 font-mono">${log.action}</span>
+                <td class="font-mono text-slate-400">#${log.id}</td>
+                <td class="font-mono text-[11px] text-slate-500">${log.timestamp}</td>
+                <td>
+                    <span class="badge-pill badge-neutral font-mono font-bold">${log.action}</span>
                 </td>
-                <td class="p-3.5 font-medium text-slate-900">${log.user}</td>
-                <td class="p-3.5 text-slate-600 font-mono text-[11px] truncate max-w-md" title="${log.details}">${log.details}</td>
+                <td class="font-semibold text-slate-900">${log.user}</td>
+                <td class="text-slate-600 font-mono text-[11px] truncate max-w-md" title="${log.details}">${log.details}</td>
             `;
             tbody.appendChild(tr);
         });

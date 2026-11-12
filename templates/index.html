@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPulse Analytics | Student Feedback NLP Platform</title>
+    <title>EduPulse™ AI — Academic Feedback NLP Intelligence Platform</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome 6 -->
+    <!-- Font Awesome 6 Pro / Free -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
+    <!-- Chart.js 4 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Custom Design System -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Enterprise Design System -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body class="bg-slate-50 text-slate-900 font-['Inter'] antialiased min-h-screen flex flex-col">
@@ -23,69 +23,91 @@
     <div id="toast-container"></div>
 
     <!-- ====================================================================== -->
-    <!-- TOP NAVIGATION BAR                                                     -->
+    <!-- TOP NAVIGATION BAR (Linear / Stripe / Vercel Quality)                  -->
     <!-- ====================================================================== -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <header class="glass-header sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 sm:h-20">
+            <div class="flex justify-between items-center h-16 sm:h-18">
                 
-                <!-- Left: Brand Logo & Title -->
-                <div class="flex items-center space-x-3.5">
-                    <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100">
-                        <i class="fa-solid fa-bars text-lg"></i>
+                <!-- Left: Logo & Workspace Context -->
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-bars text-base"></i>
                     </button>
-                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-700 flex items-center justify-center text-white text-lg sm:text-xl shadow-md shadow-indigo-100 shrink-0">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight">EduPulse Analytics</h1>
-                            <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase tracking-wider">v2.4 Enterprise</span>
+                    
+                    <!-- Modern Tech Logo Icon -->
+                    <a href="/" class="flex items-center space-x-2.5 group">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 group-hover:bg-indigo-700 flex items-center justify-center text-white text-base shadow-sm shadow-indigo-200 transition-all shrink-0">
+                            <i class="fa-solid fa-brain"></i>
                         </div>
-                        <p class="text-[11px] sm:text-xs font-semibold text-slate-500">Student Feedback NLP & Aspect-Based Sentiment Platform</p>
+                        <div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">EduPulse<span class="text-indigo-600 font-extrabold">.ai</span></span>
+                                <span class="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase tracking-widest">Enterprise</span>
+                            </div>
+                            <p class="hidden sm:block text-[10px] font-medium text-slate-400 -mt-0.5">Academic Feedback NLP & Sentiment Engine</p>
+                        </div>
+                    </a>
+
+                    <!-- Workspace Switcher Pill -->
+                    <div class="hidden md:flex items-center space-x-1.5 text-xs text-slate-600 bg-slate-100/80 px-2.5 py-1 rounded-lg border border-slate-200/80">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="font-medium text-slate-700">Main Campus</span>
+                        <span class="text-slate-400">/</span>
+                        <span class="text-slate-500">All Departments</span>
                     </div>
                 </div>
 
-                <!-- Right: Quick Actions & User Auth Section -->
-                <div class="flex items-center space-x-2 sm:space-x-4">
-                    <!-- 1-Click PDF Benchmark Quick Button -->
+                <!-- Center: Quick Command & Benchmark Hotkey -->
+                <div class="hidden xl:flex items-center space-x-2">
                     <button onclick="runPdfMixedBenchmark()" 
-                        class="hidden md:flex items-center space-x-2 px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold rounded-xl shadow-sm transition">
-                        <i class="fa-solid fa-bolt text-indigo-600"></i>
+                        class="flex items-center space-x-2 px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 text-xs font-semibold rounded-lg shadow-xs transition group">
+                        <i class="fa-solid fa-bolt text-indigo-600 group-hover:scale-110 transition-transform"></i>
                         <span>1-Click PDF Benchmark</span>
+                        <kbd class="px-1.5 py-0.5 text-[9px] font-mono font-semibold bg-white border border-indigo-200 rounded text-indigo-700">B</kbd>
                     </button>
 
-                    <!-- System Status Indicator -->
-                    <div class="hidden xl:flex items-center space-x-2 text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                    <div class="flex items-center space-x-2 text-xs font-medium text-slate-500 bg-slate-100/60 px-3 py-1.5 rounded-lg border border-slate-200/80">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span>NLP Engine: Active (5,000 Records)</span>
+                        <span class="font-mono text-[11px] text-slate-600">Core Engine: 5,000 Records &bull; 92.4% Acc</span>
                     </div>
+                </div>
+
+                <!-- Right: Quick Search & User Auth Section -->
+                <div class="flex items-center space-x-2.5 sm:space-x-3">
+                    
+                    <!-- Quick Search Trigger -->
+                    <button onclick="focusGlobalSearch()" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 text-xs text-slate-400 bg-slate-100 hover:bg-slate-200/70 border border-slate-200 rounded-lg transition">
+                        <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
+                        <span>Quick search...</span>
+                        <kbd class="px-1 py-0.2 text-[9px] font-mono bg-white border border-slate-300 rounded text-slate-500">/</kbd>
+                    </button>
 
                     <!-- Auth Control Widget -->
                     <div id="authNavContainer" class="flex items-center space-x-2">
                         <!-- Unauthenticated State (default) -->
                         <div id="unauthControls" class="flex items-center space-x-2">
-                            <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
-                                <i class="fa-solid fa-right-to-bracket mr-1.5"></i>Sign In
+                            <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                                Sign In
                             </button>
-                            <button onclick="openAuthModal('register')" class="px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition">
+                            <button onclick="openAuthModal('register')" class="px-3.5 py-1.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition">
                                 Register
                             </button>
                         </div>
 
                         <!-- Authenticated State -->
-                        <div id="authControls" class="hidden flex items-center space-x-3">
-                            <div class="flex items-center space-x-2.5">
-                                <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs border border-indigo-200" id="userAvatarBadge">
+                        <div id="authControls" class="hidden flex items-center space-x-2.5">
+                            <button onclick="openSettingsModal()" class="flex items-center space-x-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition text-left group">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs" id="userAvatarBadge">
                                     A
                                 </div>
-                                <div class="hidden sm:block text-left">
-                                    <p class="text-xs font-bold text-slate-900 leading-tight" id="userNameLabel">Admin User</p>
-                                    <span class="text-[10px] font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded" id="userRoleBadge">admin</span>
+                                <div class="hidden sm:block">
+                                    <p class="text-xs font-bold text-slate-900 leading-tight group-hover:text-indigo-600 transition" id="userNameLabel">Admin</p>
+                                    <span class="text-[9px] font-mono font-semibold uppercase tracking-wider text-indigo-700" id="userRoleBadge">admin</span>
                                 </div>
-                            </div>
-                            <button onclick="logoutUser()" title="Logout" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition text-xs">
-                                <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+                            </button>
+                            <button onclick="logoutUser()" title="Sign Out" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition text-xs">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             </button>
                         </div>
                     </div>
@@ -100,75 +122,82 @@
     <!-- ====================================================================== -->
     <div class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex gap-6">
 
-        <!-- Left Navigation Sidebar -->
-        <aside id="appSidebar" class="hidden lg:block w-64 shrink-0 space-y-6">
-            <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm space-y-1">
+        <!-- Left Navigation Sidebar (Linear / Vercel style) -->
+        <aside id="appSidebar" class="hidden lg:block w-60 shrink-0 space-y-5">
+            <div class="bg-white rounded-xl border border-slate-200 p-2.5 shadow-xs space-y-0.5">
                 
-                <p class="px-3 pt-2 pb-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Analytics & Operations</p>
+                <p class="px-3 pt-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Workspace</p>
                 
                 <a onclick="switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active">
-                    <i class="fa-solid fa-chart-pie w-5 text-center mr-2.5"></i>
-                    <span>Executive Dashboard</span>
+                    <i class="fa-solid fa-chart-pie w-4 text-center mr-2.5 text-xs"></i>
+                    <span>Dashboard & KPIs</span>
                 </a>
 
                 <a onclick="switchTab('inspector')" id="nav-inspector" class="sidebar-link">
-                    <i class="fa-solid fa-wand-magic-sparkles w-5 text-center mr-2.5"></i>
-                    <span>PDF Section 3 Diagnostic</span>
+                    <i class="fa-solid fa-wand-magic-sparkles w-4 text-center mr-2.5 text-xs"></i>
+                    <span>PDF Diagnostic</span>
                 </a>
 
                 <a onclick="switchTab('submit')" id="nav-submit" class="sidebar-link">
-                    <i class="fa-solid fa-pen-to-square w-5 text-center mr-2.5"></i>
+                    <i class="fa-solid fa-pen-to-square w-4 text-center mr-2.5 text-xs"></i>
                     <span>Submit Feedback</span>
                 </a>
 
                 <a onclick="switchTab('records')" id="nav-records" class="sidebar-link">
-                    <i class="fa-solid fa-database w-5 text-center mr-2.5"></i>
-                    <span>Feedback Records DB</span>
+                    <i class="fa-solid fa-database w-4 text-center mr-2.5 text-xs"></i>
+                    <span>Records Database</span>
                 </a>
 
-                <p class="px-3 pt-4 pb-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Corpus & Intelligence</p>
+                <p class="px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Corpus & Intelligence</p>
 
                 <a onclick="switchTab('collection')" id="nav-collection" class="sidebar-link">
-                    <i class="fa-solid fa-table-list w-5 text-center mr-2.5"></i>
-                    <span>Collection Summary (PDF)</span>
+                    <i class="fa-solid fa-table-list w-4 text-center mr-2.5 text-xs"></i>
+                    <span>Collection Summary</span>
                 </a>
 
                 <a onclick="switchTab('batch')" id="nav-batch" class="sidebar-link">
-                    <i class="fa-solid fa-file-csv w-5 text-center mr-2.5"></i>
+                    <i class="fa-solid fa-file-csv w-4 text-center mr-2.5 text-xs"></i>
                     <span>Batch CSV Ingestion</span>
                 </a>
 
                 <a onclick="switchTab('pipeline')" id="nav-pipeline" class="sidebar-link">
-                    <i class="fa-solid fa-diagram-project w-5 text-center mr-2.5"></i>
-                    <span>NLP Pipeline & Models</span>
+                    <i class="fa-solid fa-diagram-project w-4 text-center mr-2.5 text-xs"></i>
+                    <span>NLP Pipeline & Model</span>
                 </a>
 
+                <p class="px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Governance</p>
+
                 <a onclick="switchTab('audit')" id="nav-audit" class="sidebar-link">
-                    <i class="fa-solid fa-shield-halved w-5 text-center mr-2.5"></i>
-                    <span>Audit Logs</span>
+                    <i class="fa-solid fa-shield-halved w-4 text-center mr-2.5 text-xs"></i>
+                    <span>Audit Trail</span>
+                </a>
+
+                <a onclick="openSettingsModal()" class="sidebar-link">
+                    <i class="fa-solid fa-gear w-4 text-center mr-2.5 text-xs"></i>
+                    <span>User Settings</span>
                 </a>
 
             </div>
 
-            <!-- Dataset Quick Footprint Widget -->
-            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-5 rounded-2xl shadow-sm space-y-3">
-                <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold tracking-wider uppercase text-indigo-300">Empirical Benchmark</span>
-                    <i class="fa-solid fa-database text-indigo-400 text-xs"></i>
+            <!-- Compact System Footprint Card -->
+            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-4 rounded-xl shadow-xs space-y-2.5">
+                <div class="flex items-center justify-between text-[10px] font-mono text-indigo-300 uppercase tracking-wider">
+                    <span>Verified Dataset</span>
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl font-black font-mono">5,000</h3>
-                    <p class="text-xs text-indigo-200">Verified student reviews analyzed</p>
+                    <h3 class="text-xl font-bold font-mono tracking-tight">5,000</h3>
+                    <p class="text-[11px] text-slate-300">Multi-Aspect Student Reviews</p>
                 </div>
-                <div class="pt-2 border-t border-indigo-800/80 flex items-center justify-between text-[11px] text-indigo-300">
-                    <span>Model: Logistic Regression</span>
-                    <span class="font-bold text-emerald-400">92.4% Acc</span>
+                <div class="pt-2 border-t border-slate-800 text-[10px] font-mono flex items-center justify-between text-slate-400">
+                    <span>Logistic Regression</span>
+                    <span class="text-emerald-400 font-bold">92.4% F1</span>
                 </div>
             </div>
         </aside>
 
-        <!-- Mobile Drawer Backdrop -->
-        <div id="mobileBackdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden"></div>
+        <!-- Mobile Backdrop -->
+        <div id="mobileBackdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"></div>
 
         <!-- ================================================================== -->
         <!-- MAIN VIEW CONTAINER                                                -->
@@ -178,23 +207,23 @@
             <!-- ============================================================== -->
             <!-- VIEW 1: EXECUTIVE DASHBOARD                                    -->
             <!-- ============================================================== -->
-            <section id="view-dashboard" class="tab-pane space-y-6">
+            <section id="view-dashboard" class="tab-pane space-y-5">
                 <!-- Welcome Banner -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="metric-card p-5 sm:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">Executive Overview</span>
-                            <span class="text-xs text-slate-400 font-mono" id="dashLastUpdated">Live Sync</span>
+                            <span class="badge-pill badge-status-new">Executive Overview</span>
+                            <span class="text-[11px] text-slate-400 font-mono" id="dashLastUpdated">Synced Live</span>
                         </div>
-                        <h2 class="text-xl font-extrabold text-slate-900 mt-1">Student Experience & Academic Sentiment</h2>
-                        <p class="text-xs text-slate-600 mt-0.5">Real-time NLP telemetry from institutional feedback records, grievances, and faculty aspects.</p>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight mt-1">Academic Experience & Sentiment Intelligence</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Real-time NLP telemetry aggregated across faculty teaching, laboratory computers, infrastructure, and syllabus.</p>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button onclick="loadDashboardData()" class="px-3.5 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center space-x-1.5">
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button onclick="loadDashboardData()" class="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-arrows-rotate text-xs"></i>
-                            <span>Refresh</span>
+                            <span>Sync</span>
                         </button>
-                        <button onclick="switchTab('submit')" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition flex items-center space-x-1.5">
+                        <button onclick="switchTab('submit')" class="px-3.5 py-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-plus text-xs"></i>
                             <span>New Feedback</span>
                         </button>
@@ -202,118 +231,132 @@
                 </div>
 
                 <!-- KPI Metric Cards Grid -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
                     <!-- KPI 1 -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <div class="metric-card p-4 sm:p-5 space-y-1">
                         <div class="flex items-center justify-between text-slate-400 text-xs">
                             <span class="font-medium text-slate-500">Total Feedback</span>
-                            <i class="fa-solid fa-comments text-indigo-500"></i>
+                            <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-comments"></i>
+                            </div>
                         </div>
-                        <p class="text-2xl font-black text-slate-900 font-mono" id="kpiTotalFeedback">5,000</p>
-                        <div class="flex items-center text-[11px] text-emerald-600 font-semibold pt-1">
-                            <i class="fa-solid fa-arrow-trend-up mr-1"></i>
-                            <span>Verified Multi-Aspect Corpus</span>
+                        <p class="text-2xl font-extrabold text-slate-900 font-mono tracking-tight" id="kpiTotalFeedback">5,000</p>
+                        <div class="flex items-center text-[11px] text-emerald-600 font-semibold pt-0.5">
+                            <i class="fa-solid fa-arrow-trend-up mr-1 text-[10px]"></i>
+                            <span>+12.4% vs last semester</span>
                         </div>
                     </div>
 
                     <!-- KPI 2 -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <div class="metric-card p-4 sm:p-5 space-y-1">
                         <div class="flex items-center justify-between text-slate-400 text-xs">
                             <span class="font-medium text-slate-500">Positive Sentiment</span>
-                            <i class="fa-solid fa-face-smile text-emerald-500"></i>
+                            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-face-smile"></i>
+                            </div>
                         </div>
-                        <p class="text-2xl font-black text-emerald-600 font-mono" id="kpiPositivePct">53.4%</p>
-                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-1">
-                            <span id="kpiPositiveCount">2,670</span>&nbsp;positive responses
+                        <p class="text-2xl font-extrabold text-emerald-600 font-mono tracking-tight" id="kpiPositivePct">53.4%</p>
+                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-0.5">
+                            <span id="kpiPositiveCount" class="font-mono">2,670</span>&nbsp;positive responses
                         </div>
                     </div>
 
                     <!-- KPI 3 -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <div class="metric-card p-4 sm:p-5 space-y-1">
                         <div class="flex items-center justify-between text-slate-400 text-xs">
                             <span class="font-medium text-slate-500">Critical Grievances</span>
-                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+                            <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
                         </div>
-                        <p class="text-2xl font-black text-rose-600 font-mono" id="kpiNegativePct">16.9%</p>
-                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-1">
-                            <span id="kpiNegativeCount">845</span>&nbsp;negative complaints
+                        <p class="text-2xl font-extrabold text-rose-600 font-mono tracking-tight" id="kpiNegativePct">16.9%</p>
+                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-0.5">
+                            <span id="kpiNegativeCount" class="font-mono">845</span>&nbsp;negative complaints
                         </div>
                     </div>
 
                     <!-- KPI 4 -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <div class="metric-card p-4 sm:p-5 space-y-1">
                         <div class="flex items-center justify-between text-slate-400 text-xs">
-                            <span class="font-medium text-slate-500">Action Resolution Rate</span>
-                            <i class="fa-solid fa-circle-check text-indigo-500"></i>
+                            <span class="font-medium text-slate-500">Resolution Rate</span>
+                            <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
                         </div>
-                        <p class="text-2xl font-black text-indigo-600 font-mono" id="kpiResolutionRate">78.5%</p>
-                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-1">
-                            <span>Status tracking active</span>
+                        <p class="text-2xl font-extrabold text-indigo-600 font-mono tracking-tight" id="kpiResolutionRate">78.5%</p>
+                        <div class="flex items-center text-[11px] text-slate-500 font-medium pt-0.5">
+                            <span>Workflow active in DB</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Charts Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <!-- Sentiment Doughnut -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="metric-card p-5 space-y-3">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Overall Sentiment Breakdown</h3>
-                            <span class="text-[11px] text-slate-400 font-mono">4 Classification Classes</span>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Overall Sentiment Breakdown</h3>
+                                <p class="text-[11px] text-slate-400">Classified across 5,000 student comments</p>
+                            </div>
+                            <span class="badge-pill badge-neutral font-mono">4 Classes</span>
                         </div>
-                        <div class="h-64 flex items-center justify-center">
+                        <div class="h-60 flex items-center justify-center">
                             <canvas id="dashSentimentChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Top 5 Common Issues Bar -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="metric-card p-5 space-y-3">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Top 5 Grievances Reported</h3>
-                            <span class="text-[11px] text-slate-400 font-mono">Frequency Count</span>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Top 5 Grievances Reported</h3>
+                                <p class="text-[11px] text-slate-400">Institutional action items from student feedback</p>
+                            </div>
+                            <span class="badge-pill badge-neutral font-mono">Frequency</span>
                         </div>
-                        <div class="h-64 flex items-center justify-center">
+                        <div class="h-60 flex items-center justify-center">
                             <canvas id="dashIssuesChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Department Sentiment Breakdown -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="metric-card p-5 space-y-3">
                     <div class="flex justify-between items-center">
                         <div>
                             <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Departmental Sentiment Breakdown</h3>
                             <p class="text-xs text-slate-500 mt-0.5">Distribution of positive vs negative feedback across academic departments.</p>
                         </div>
-                        <button onclick="switchTab('records')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">
-                            View All Records &rarr;
+                        <button onclick="switchTab('records')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
+                            Explore All Records &rarr;
                         </button>
                     </div>
-                    <div class="h-64">
+                    <div class="h-60">
                         <canvas id="dashDeptChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Recent Feedback Activity -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                <div class="metric-card overflow-hidden">
+                    <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center">
                         <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Recent Feedback Submissions</h3>
-                        <button onclick="switchTab('records')" class="text-xs font-semibold text-indigo-600 hover:underline">Explore Table &rarr;</button>
+                        <button onclick="switchTab('records')" class="text-xs font-semibold text-indigo-600 hover:underline">Full Database &rarr;</button>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="p-3.5">ID</th>
-                                    <th class="p-3.5">Student / Dept</th>
-                                    <th class="p-3.5">Feedback Text</th>
-                                    <th class="p-3.5">Sentiment</th>
-                                    <th class="p-3.5">Aspect</th>
-                                    <th class="p-3.5">Status</th>
-                                    <th class="p-3.5 text-right">Actions</th>
+                                    <th class="w-16">ID</th>
+                                    <th class="w-40">Student / Dept</th>
+                                    <th>Feedback Text</th>
+                                    <th class="w-24">Sentiment</th>
+                                    <th class="w-28">Aspect</th>
+                                    <th class="w-24">Status</th>
+                                    <th class="w-20 text-right">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="dashRecentRows" class="divide-y divide-slate-100 text-slate-800">
+                            <tbody id="dashRecentRows">
                                 <tr><td colspan="7" class="p-4 text-center text-slate-400">Loading recent records...</td></tr>
                             </tbody>
                         </table>
@@ -324,109 +367,109 @@
             <!-- ============================================================== -->
             <!-- VIEW 2: PDF SECTION 3 DIAGNOSTIC & BENCHMARK                    -->
             <!-- ============================================================== -->
-            <section id="view-inspector" class="tab-pane hidden space-y-6">
+            <section id="view-inspector" class="tab-pane hidden space-y-5">
                 <!-- Section Header Banner -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                <div class="metric-card p-5 sm:p-6 space-y-2">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+                        <span class="badge-pill badge-status-new">
                             PDF Section 3: Expected Output
                         </span>
                         <span class="text-xs text-slate-400 font-mono">Dataset: 5,000 Verified Responses</span>
                     </div>
-                    <h2 class="text-lg font-bold text-slate-900">Individual Feedback Response Analyzer</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Individual Feedback Response Analyzer</h2>
                     <p class="text-xs text-slate-600">
                         Processes individual comments to identify the overall sentiment (Positive, Negative, Neutral, or Mixed), the specific aspects being discussed, and the recurring key issues.
                     </p>
                 </div>
 
                 <!-- 1-Click PDF Benchmark Action Banner -->
-                <div class="bg-indigo-50/80 border border-indigo-100 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shadow-sm">
+                <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div class="flex items-center space-x-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-ping"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 -ml-5"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-600 -ml-4.5"></span>
                         <p class="text-xs font-bold text-indigo-950">Official PDF Benchmark Input:</p>
-                        <span class="text-xs font-mono text-indigo-800 bg-white px-2.5 py-1 rounded-lg border border-indigo-200">
+                        <span class="text-xs font-mono text-indigo-800 bg-white px-2.5 py-1 rounded-md border border-indigo-200">
                             "The faculty explains concepts clearly, but the lab computers are very slow."
                         </span>
                     </div>
                     <button type="button" onclick="runPdfMixedBenchmark()" 
-                        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center space-x-2 shrink-0">
+                        class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center space-x-2 shrink-0">
                         <i class="fa-solid fa-bolt"></i>
                         <span>1-Click Test PDF Example</span>
                     </button>
                 </div>
 
                 <!-- Main Input Form -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+                <div class="metric-card p-5 sm:p-6 space-y-4">
                     <div class="flex justify-between items-center">
                         <label for="feedbackInput" class="text-xs font-bold text-slate-700 uppercase tracking-wider">
                             Input Feedback Text:
                         </label>
-                        <span id="charCount" class="text-xs text-slate-400">0 characters</span>
+                        <span id="charCount" class="text-xs text-slate-400 font-mono">0 characters</span>
                     </div>
 
-                    <textarea id="feedbackInput" rows="4"
-                        class="w-full p-4 text-slate-900 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition placeholder-slate-400"
+                    <textarea id="feedbackInput" rows="3"
+                        class="form-input-control text-sm"
                         placeholder="Enter student feedback here (e.g. 'The faculty explains concepts clearly, but the lab computers are very slow.')..."></textarea>
 
                     <div class="flex flex-wrap justify-between items-center gap-2 pt-2 border-t border-slate-100">
                         <div class="flex flex-wrap items-center gap-2">
-                            <button onclick="clearInput()" class="px-3.5 py-2 text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                            <button onclick="clearInput()" class="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
                                 Clear
                             </button>
                             <span class="text-xs text-slate-400">Try test cases:</span>
-                            <button onclick="runSample('Campus Wi-Fi is fast and reliable in most areas. Classrooms are clean and comfortable.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded transition font-medium">
+                            <button onclick="runSample('Campus Wi-Fi is fast and reliable in most areas. Classrooms are clean and comfortable.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition font-medium">
                                 Positive Case
                             </button>
-                            <button onclick="runSample('Internet and water facilities in the hostel are inconsistent. Canteen prices are too high.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded transition font-medium">
+                            <button onclick="runSample('Internet and water facilities in the hostel are inconsistent. Canteen prices are too high.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition font-medium">
                                 Negative Case
                             </button>
-                            <button onclick="runSample('The semester schedule was announced as per the academic calendar.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded transition font-medium">
+                            <button onclick="runSample('The semester schedule was announced as per the academic calendar.')" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition font-medium">
                                 Neutral Case
                             </button>
                         </div>
 
                         <button id="analyzeBtn" onclick="evaluateSingleComment()"
-                            class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-100 transition flex items-center space-x-2">
+                            class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center space-x-2">
                             <span>Analyze Response</span>
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- EXACT PDF OUTPUT FORMAT TABLE (Section 3 of PDF) -->
-                <div id="pdfOutputCard" class="space-y-4">
+                <div id="pdfOutputCard" class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center">
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center">
                             <i class="fa-solid fa-table text-indigo-600 mr-2"></i>Formatted Expected Output (As specified in Project PDF)
                         </h3>
                         <span class="text-xs text-slate-400 font-mono" id="auditIdBadge">ID: FB-DEMO</span>
                     </div>
 
                     <!-- Exact PDF Table Replica -->
-                    <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+                    <div class="bg-white rounded-xl border-2 border-slate-300 shadow-xs overflow-hidden">
                         <table class="w-full text-left border-collapse">
                             <tbody>
                                 <!-- Input Row -->
                                 <tr class="border-b border-slate-200">
-                                    <td class="w-40 sm:w-48 bg-slate-50 p-4 sm:p-5 font-bold text-slate-900 text-sm align-top border-r border-slate-200">
+                                    <td class="w-36 sm:w-44 bg-slate-50 p-4 font-bold text-slate-900 text-sm align-top border-r border-slate-200">
                                         Input
                                     </td>
-                                    <td class="p-4 sm:p-5 text-slate-800 text-sm font-medium italic" id="pdfTableInput">
+                                    <td class="p-4 text-slate-800 text-sm font-medium italic" id="pdfTableInput">
                                         "The faculty explains concepts clearly, but the lab computers are very slow."
                                     </td>
                                 </tr>
 
                                 <!-- Output Row -->
                                 <tr>
-                                    <td class="w-40 sm:w-48 bg-slate-50 p-4 sm:p-5 font-bold text-slate-900 text-sm align-top border-r border-slate-200">
+                                    <td class="w-36 sm:w-44 bg-slate-50 p-4 font-bold text-slate-900 text-sm align-top border-r border-slate-200">
                                         Output
                                     </td>
-                                    <td class="p-4 sm:p-5 text-slate-800 space-y-4">
+                                    <td class="p-4 text-slate-800 space-y-3.5">
                                         <!-- Overall Sentiment -->
                                         <div class="flex items-center">
                                             <span class="font-bold text-slate-900 text-sm">Overall Sentiment:</span>
-                                            <span id="pdfTableSentiment" class="ml-2 px-3 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                                            <span id="pdfTableSentiment" class="ml-2.5 px-3 py-0.5 text-xs font-bold rounded-full bg-amber-100 text-amber-800 border border-amber-300">
                                                 Mixed
                                             </span>
                                             <span id="pdfConfidenceBadge" class="ml-3 text-xs text-slate-400 font-mono">Confidence: 88.5%</span>
@@ -472,19 +515,19 @@
             <!-- ============================================================== -->
             <!-- VIEW 3: STUDENT FEEDBACK SUBMISSION PORTAL                     -->
             <!-- ============================================================== -->
-            <section id="view-submit" class="tab-pane hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+            <section id="view-submit" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 space-y-2">
+                    <span class="badge-pill badge-status-new">
                         Student Voice Portal
                     </span>
-                    <h2 class="text-lg font-bold text-slate-900">Submit Course & Academic Feedback</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Submit Course & Academic Feedback</h2>
                     <p class="text-xs text-slate-600">
-                        Share constructive feedback regarding teaching, laboratory facilities, curriculum, or infrastructure. Your response will be securely cataloged and analyzed.
+                        Share constructive feedback regarding teaching, laboratory facilities, curriculum, or infrastructure. Your response is cataloged and analyzed in real-time.
                     </p>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-                    <form id="studentFeedbackForm" onsubmit="handleFeedbackSubmit(event)" class="space-y-5">
+                <div class="metric-card p-5 sm:p-6">
+                    <form id="studentFeedbackForm" onsubmit="handleFeedbackSubmit(event)" class="space-y-4">
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Student Name -->
@@ -492,8 +535,8 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                     Student Name / Roll (Optional)
                                 </label>
-                                <input type="text" id="subStudentName" placeholder="e.g. John Doe / 23CS012"
-                                    class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none">
+                                <input type="text" id="subStudentName" placeholder="e.g. Sharanya Kora / 23CS012"
+                                    class="form-input-control text-xs">
                             </div>
 
                             <!-- Department -->
@@ -502,7 +545,7 @@
                                     Academic Department <span class="text-rose-500">*</span>
                                 </label>
                                 <select id="subDepartment" required
-                                    class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none bg-white">
+                                    class="form-input-control text-xs bg-white">
                                     <option value="Computer Science">Computer Science & Engineering</option>
                                     <option value="Information Technology">Information Technology</option>
                                     <option value="Electronics & Communication">Electronics & Communication</option>
@@ -518,7 +561,7 @@
                                     Course / Subject Name
                                 </label>
                                 <input type="text" id="subCourse" placeholder="e.g. Natural Language Processing (CS501)"
-                                    class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none">
+                                    class="form-input-control text-xs">
                             </div>
 
                             <!-- Faculty Member -->
@@ -527,7 +570,7 @@
                                     Faculty / Instructor Name
                                 </label>
                                 <input type="text" id="subFaculty" placeholder="e.g. Dr. K. Sharma"
-                                    class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none">
+                                    class="form-input-control text-xs">
                             </div>
                         </div>
 
@@ -537,11 +580,11 @@
                                 Overall Experience Rating
                             </label>
                             <div class="flex items-center space-x-2" id="starRatingWidget">
-                                <button type="button" onclick="setRating(1)" class="star-btn text-2xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" onclick="setRating(2)" class="star-btn text-2xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" onclick="setRating(3)" class="star-btn text-2xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" onclick="setRating(4)" class="star-btn text-2xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" onclick="setRating(5)" class="star-btn text-2xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(1)" class="star-btn text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(2)" class="star-btn text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(3)" class="star-btn text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(4)" class="star-btn text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(5)" class="star-btn text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
                                 <span class="ml-2 text-xs font-bold text-slate-600" id="ratingTextLabel">5 Stars (Excellent)</span>
                                 <input type="hidden" id="subRating" value="5">
                             </div>
@@ -553,20 +596,20 @@
                                 <label for="subFeedbackText" class="text-xs font-bold text-slate-700 uppercase tracking-wider">
                                     Detailed Feedback Comments <span class="text-rose-500">*</span>
                                 </label>
-                                <span id="subCharCount" class="text-xs text-slate-400">0 characters</span>
+                                <span id="subCharCount" class="text-xs text-slate-400 font-mono">0 characters</span>
                             </div>
-                            <textarea id="subFeedbackText" rows="4" required
-                                class="w-full p-4 text-slate-900 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition placeholder-slate-400"
+                            <textarea id="subFeedbackText" rows="3" required
+                                class="form-input-control text-sm"
                                 placeholder="Describe what worked well, specific areas for improvement, lab or teaching observations..."></textarea>
                         </div>
 
                         <!-- Form Actions -->
-                        <div class="flex items-center justify-end space-x-3 pt-2">
-                            <button type="reset" onclick="resetSubmitForm()" class="px-4 py-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+                        <div class="flex items-center justify-end space-x-2.5 pt-2">
+                            <button type="reset" onclick="resetSubmitForm()" class="px-3.5 py-2 text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
                                 Reset Form
                             </button>
                             <button type="submit" id="submitFeedbackBtn"
-                                class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-100 transition flex items-center space-x-2">
+                                class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center space-x-2">
                                 <i class="fa-solid fa-paper-plane text-xs"></i>
                                 <span>Submit Feedback Response</span>
                             </button>
@@ -579,23 +622,23 @@
             <!-- ============================================================== -->
             <!-- VIEW 4: FEEDBACK RECORDS DATABASE & CRUD                       -->
             <!-- ============================================================== -->
-            <section id="view-records" class="tab-pane hidden space-y-6">
+            <section id="view-records" class="tab-pane hidden space-y-5">
                 <!-- Header Toolbar -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="metric-card p-5 sm:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">SQLite Repository</span>
+                            <span class="badge-pill badge-status-new">SQLite Repository</span>
                             <span class="text-xs text-slate-400 font-mono" id="recordsTotalBadge">0 Records</span>
                         </div>
-                        <h2 class="text-lg font-bold text-slate-900 mt-1">Feedback Database & Management</h2>
-                        <p class="text-xs text-slate-600 mt-0.5">Filter, search, review status, and update records across institutional departments.</p>
+                        <h2 class="text-lg font-bold text-slate-900 tracking-tight mt-1">Feedback Database & Management</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Filter, search, review status, and update records across institutional departments.</p>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button onclick="exportRecordsCsv()" class="px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center space-x-1.5">
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button onclick="exportRecordsCsv()" class="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-file-export text-xs"></i>
                             <span>Export CSV</span>
                         </button>
-                        <button onclick="switchTab('submit')" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition flex items-center space-x-1.5">
+                        <button onclick="switchTab('submit')" class="px-3.5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-plus text-xs"></i>
                             <span>New Entry</span>
                         </button>
@@ -603,22 +646,22 @@
                 </div>
 
                 <!-- Filters & Search Toolbar -->
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div class="metric-card p-3.5 space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
                         <!-- Search Box -->
                         <div class="lg:col-span-2">
                             <div class="relative">
-                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
                                 <input type="text" id="recSearchInput" placeholder="Search feedback text, student, issue..."
                                     oninput="debounceRecordsSearch()"
-                                    class="w-full pl-9 pr-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
+                                    class="form-input-control pl-8 py-1.5 text-xs">
                             </div>
                         </div>
 
                         <!-- Sentiment Filter -->
                         <div>
                             <select id="recSentimentFilter" onchange="loadRecords(1)"
-                                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white font-medium text-slate-700">
+                                class="form-input-control py-1.5 text-xs font-medium text-slate-700">
                                 <option value="">All Sentiments</option>
                                 <option value="Positive">Positive</option>
                                 <option value="Negative">Negative</option>
@@ -630,7 +673,7 @@
                         <!-- Department Filter -->
                         <div>
                             <select id="recDeptFilter" onchange="loadRecords(1)"
-                                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white font-medium text-slate-700">
+                                class="form-input-control py-1.5 text-xs font-medium text-slate-700">
                                 <option value="">All Departments</option>
                                 <option value="Computer Science">Computer Science</option>
                                 <option value="Information Technology">Information Technology</option>
@@ -644,7 +687,7 @@
                         <!-- Status Filter -->
                         <div>
                             <select id="recStatusFilter" onchange="loadRecords(1)"
-                                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white font-medium text-slate-700">
+                                class="form-input-control py-1.5 text-xs font-medium text-slate-700">
                                 <option value="">All Statuses</option>
                                 <option value="New">New</option>
                                 <option value="Under Review">Under Review</option>
@@ -656,31 +699,31 @@
                 </div>
 
                 <!-- Records Data Table -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="metric-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="p-3.5 w-16">ID</th>
-                                    <th class="p-3.5 w-36">Department</th>
-                                    <th class="p-3.5">Feedback Text</th>
-                                    <th class="p-3.5 w-24">Sentiment</th>
-                                    <th class="p-3.5 w-28">Aspect</th>
-                                    <th class="p-3.5 w-20">Urgency</th>
-                                    <th class="p-3.5 w-28">Status</th>
-                                    <th class="p-3.5 w-24 text-right">Actions</th>
+                                    <th class="w-16">ID</th>
+                                    <th class="w-36">Department</th>
+                                    <th>Feedback Text</th>
+                                    <th class="w-24">Sentiment</th>
+                                    <th class="w-28">Aspect</th>
+                                    <th class="w-20">Urgency</th>
+                                    <th class="w-28">Status</th>
+                                    <th class="w-24 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="recordsTableBody" class="divide-y divide-slate-100 text-slate-800">
+                            <tbody id="recordsTableBody">
                                 <tr><td colspan="8" class="p-6 text-center text-slate-400">Loading records...</td></tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Pagination Footer -->
-                    <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <span class="text-xs text-slate-500" id="recPaginationInfo">Showing 0 of 0 records</span>
-                        <div class="flex items-center space-x-2" id="recPaginationButtons">
+                    <div class="p-3.5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <span class="text-xs text-slate-500 font-mono" id="recPaginationInfo">Showing 0 of 0 records</span>
+                        <div class="flex items-center space-x-1.5" id="recPaginationButtons">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
@@ -690,29 +733,29 @@
             <!-- ============================================================== -->
             <!-- VIEW 5: LARGE COLLECTION ANALYSIS (PDF SECTION 4)              -->
             <!-- ============================================================== -->
-            <section id="view-collection" class="tab-pane hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+            <section id="view-collection" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 space-y-2">
+                    <span class="badge-pill badge-status-new">
                         PDF Section 3 & 4: Collection Summary
                     </span>
-                    <h2 class="text-lg font-bold text-slate-900">Large Collection Feedback Analysis (Aggregated Trends)</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Large Collection Feedback Analysis (Aggregated Trends)</h2>
                     <p class="text-xs text-slate-600">
                         Instead of an administrator reading thousands of responses, the system converts unstructured feedback into overall sentiment distributions, aspect trends, and common complaints.
                     </p>
                 </div>
 
                 <!-- PDF COLLECTION TABLE REPLICA -->
-                <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
-                    <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 flex justify-between items-center">
-                        <span class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">For a large collection of feedback, the system generates:</span>
-                        <span class="text-xs font-mono font-bold text-indigo-700 bg-white px-2.5 py-1 rounded border border-slate-200">Corpus: 5,000 Records</span>
+                <div class="metric-card overflow-hidden">
+                    <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">For a large collection of feedback, the system generates:</span>
+                        <span class="text-xs font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-slate-200">Corpus: 5,000 Records</span>
                     </div>
                     
                     <table class="w-full text-left border-collapse text-sm">
                         <tbody class="divide-y divide-slate-200">
                             <!-- Total Feedback -->
                             <tr>
-                                <td class="w-56 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200">
+                                <td class="w-52 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 text-xs uppercase tracking-wider">
                                     Total Feedback
                                 </td>
                                 <td class="p-4 text-slate-900 font-black text-base font-mono" id="collecTotal">
@@ -722,24 +765,24 @@
 
                             <!-- Sentiment Distribution -->
                             <tr>
-                                <td class="w-56 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top">
+                                <td class="w-52 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top text-xs uppercase tracking-wider">
                                     Sentiment Distribution
                                 </td>
                                 <td class="p-4 text-slate-800 space-y-2">
                                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                                             <p class="text-slate-500 font-semibold">Positive</p>
                                             <p class="text-lg font-bold text-emerald-700 font-mono" id="pctPos">53.4%</p>
                                         </div>
-                                        <div class="p-3 bg-slate-100 border border-slate-200 rounded-xl">
+                                        <div class="p-3 bg-slate-100 border border-slate-200 rounded-lg">
                                             <p class="text-slate-500 font-semibold">Neutral</p>
                                             <p class="text-lg font-bold text-slate-700 font-mono" id="pctNeu">20.3%</p>
                                         </div>
-                                        <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                                        <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
                                             <p class="text-slate-500 font-semibold">Negative</p>
                                             <p class="text-lg font-bold text-rose-700 font-mono" id="pctNeg">16.9%</p>
                                         </div>
-                                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
                                             <p class="text-slate-500 font-semibold">Mixed</p>
                                             <p class="text-lg font-bold text-amber-700 font-mono" id="pctMix">9.4%</p>
                                         </div>
@@ -749,32 +792,32 @@
 
                             <!-- Aspect Analysis -->
                             <tr>
-                                <td class="w-56 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top">
+                                <td class="w-52 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top text-xs uppercase tracking-wider">
                                     Aspect Analysis
                                 </td>
                                 <td class="p-4 text-slate-800">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium">
-                                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                                        <div class="flex items-center justify-between p-2.5 rounded-md bg-slate-50 border border-slate-200">
                                             <span class="font-bold text-slate-900">Teaching</span>
                                             <span class="text-slate-400 mx-2">&rarr;</span>
                                             <span class="font-semibold text-emerald-700">Mostly Positive</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                                        <div class="flex items-center justify-between p-2.5 rounded-md bg-slate-50 border border-slate-200">
                                             <span class="font-bold text-slate-900">Faculty</span>
                                             <span class="text-slate-400 mx-2">&rarr;</span>
                                             <span class="font-semibold text-emerald-700">Mostly Positive</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                                        <div class="flex items-center justify-between p-2.5 rounded-md bg-slate-50 border border-slate-200">
                                             <span class="font-bold text-slate-900">Laboratories</span>
                                             <span class="text-slate-400 mx-2">&rarr;</span>
                                             <span class="font-semibold text-rose-700">Mostly Negative</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                                        <div class="flex items-center justify-between p-2.5 rounded-md bg-slate-50 border border-slate-200">
                                             <span class="font-bold text-slate-900">Infrastructure</span>
                                             <span class="text-slate-400 mx-2">&rarr;</span>
                                             <span class="font-semibold text-amber-700">Mixed</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200 sm:col-span-2">
+                                        <div class="flex items-center justify-between p-2.5 rounded-md bg-slate-50 border border-slate-200 sm:col-span-2">
                                             <span class="font-bold text-slate-900">Curriculum</span>
                                             <span class="text-slate-400 mx-2">&rarr;</span>
                                             <span class="font-semibold text-slate-700">Mostly Neutral</span>
@@ -785,11 +828,11 @@
 
                             <!-- Most Common Issues -->
                             <tr>
-                                <td class="w-56 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top">
+                                <td class="w-52 p-4 font-bold text-slate-900 bg-slate-50 border-r border-slate-200 align-top text-xs uppercase tracking-wider">
                                     Most Common Issues
                                 </td>
                                 <td class="p-4 text-slate-800">
-                                    <ol class="space-y-1.5 pl-4 list-decimal text-xs font-semibold text-slate-800">
+                                    <ol class="space-y-1 pl-4 list-decimal text-xs font-semibold text-slate-800">
                                         <li>Slow laboratory computers</li>
                                         <li>Insufficient practical sessions</li>
                                         <li>Internet connectivity</li>
@@ -803,17 +846,17 @@
                 </div>
 
                 <!-- Visualization Charts Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Overall Sentiment Distribution</h4>
-                        <div class="h-60 flex items-center justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                    <div class="metric-card p-5">
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">Overall Sentiment Distribution</h4>
+                        <div class="h-56 flex items-center justify-center">
                             <canvas id="collectionSentimentChart"></canvas>
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Top 5 Common Complaints Count</h4>
-                        <div class="h-60 flex items-center justify-center">
+                    <div class="metric-card p-5">
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">Top 5 Common Complaints Count</h4>
+                        <div class="h-56 flex items-center justify-center">
                             <canvas id="collectionIssuesChart"></canvas>
                         </div>
                     </div>
@@ -823,30 +866,30 @@
             <!-- ============================================================== -->
             <!-- VIEW 6: BATCH SURVEY CSV INGESTION                             -->
             <!-- ============================================================== -->
-            <section id="view-batch" class="tab-pane hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+            <section id="view-batch" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 space-y-2">
+                    <span class="badge-pill badge-status-new">
                         Batch File Processing
                     </span>
-                    <h2 class="text-lg font-bold text-slate-900">Upload & Analyze Batch CSV Feedback</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Upload & Analyze Batch CSV Feedback</h2>
                     <p class="text-xs text-slate-600">
                         Upload an entire college or department CSV to categorize sentiments and extract recurring issues automatically.
                     </p>
                 </div>
 
                 <!-- Upload Drag-and-Drop Box -->
-                <div id="batchDropZone" class="bg-white p-8 rounded-2xl drag-drop-zone text-center space-y-4">
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto text-2xl shadow-sm">
+                <div id="batchDropZone" class="p-8 drag-drop-zone text-center space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto text-xl shadow-xs">
                         <i class="fa-solid fa-file-arrow-up"></i>
                     </div>
                     <div>
                         <h3 class="text-sm font-bold text-slate-900">Select or Drag & Drop Feedback CSV File</h3>
-                        <p class="text-xs text-slate-500 mt-1">Accepts CSV files with columns like <code>feedback_text</code>, <code>comment</code>, or <code>text</code>.</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Accepts CSV files with columns like <code>feedback_text</code>, <code>comment</code>, or <code>text</code>.</p>
                     </div>
 
-                    <div class="flex justify-center items-center space-x-3 pt-2">
+                    <div class="flex justify-center items-center space-x-3 pt-1">
                         <input type="file" id="batchFileInput" accept=".csv" class="hidden" onchange="onBatchFileSelected(event)">
-                        <button onclick="document.getElementById('batchFileInput').click()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                        <button onclick="document.getElementById('batchFileInput').click()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
                             Browse CSV File
                         </button>
                         <span id="batchSelectedName" class="text-xs text-slate-500 italic">No file selected</span>
@@ -863,30 +906,30 @@
 
                 <!-- Ingestion Results -->
                 <div id="batchOutputSection" class="hidden space-y-4">
-                    <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="metric-card p-4 flex justify-between items-center">
                         <div>
                             <h3 class="text-sm font-bold text-slate-900">Batch Processing Results</h3>
                             <p id="batchMetaStats" class="text-xs text-slate-500 mt-0.5">Processed 500 rows.</p>
                         </div>
-                        <a href="/api/download_audit_report" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center space-x-2">
+                        <a href="/api/download_audit_report" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-download"></i>
                             <span>Download Annotated CSV</span>
                         </a>
                     </div>
 
-                    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <div class="metric-card overflow-hidden">
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs">
-                                <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
+                            <table class="data-table">
+                                <thead>
                                     <tr>
-                                        <th class="p-3">Feedback Text</th>
-                                        <th class="p-3">Sentiment</th>
-                                        <th class="p-3">Confidence</th>
-                                        <th class="p-3">Aspect</th>
-                                        <th class="p-3">Key Issue</th>
+                                        <th>Feedback Text</th>
+                                        <th class="w-24">Sentiment</th>
+                                        <th class="w-24">Confidence</th>
+                                        <th class="w-32">Aspect</th>
+                                        <th>Key Issue</th>
                                     </tr>
                                 </thead>
-                                <tbody id="batchTableRows" class="divide-y divide-slate-100 text-slate-800">
+                                <tbody id="batchTableRows">
                                     <!-- Populated dynamically -->
                                 </tbody>
                             </table>
@@ -898,138 +941,138 @@
             <!-- ============================================================== -->
             <!-- VIEW 7: NLP PIPELINE ARCHITECTURE & TOKEN TRACE (PDF SEC 5)    -->
             <!-- ============================================================== -->
-            <section id="view-pipeline" class="tab-pane hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+            <section id="view-pipeline" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 space-y-2">
+                    <span class="badge-pill badge-status-new">
                         PDF Section 5: NLP Relevance
                     </span>
-                    <h2 class="text-lg font-bold text-slate-900">NLP Architecture & Pipeline Demonstration</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">NLP Architecture & Pipeline Demonstration</h2>
                     <p class="text-xs text-slate-600">
                         The project demonstrates multiple Natural Language Processing techniques rather than only producing a simple positive/negative label.
                     </p>
                 </div>
 
                 <!-- The Pipeline Flow diagram from PDF -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">NLP Pipeline (From PDF Spec):</h3>
-                    <div class="flex flex-wrap items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Raw Text</span>
+                <div class="metric-card p-5">
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2.5">NLP Pipeline (From PDF Spec):</h3>
+                    <div class="flex flex-wrap items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Raw Text</span>
                         <span class="text-slate-400">&rarr;</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Preprocessing</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Preprocessing</span>
                         <span class="text-slate-400">&rarr;</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Sentiment Classification</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Sentiment Classification</span>
                         <span class="text-slate-400">&rarr;</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Aspect Extraction</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Aspect Extraction</span>
                         <span class="text-slate-400">&rarr;</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Topic Detection</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Topic Detection</span>
                         <span class="text-slate-400">&rarr;</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg border border-indigo-200">Visualization</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded border border-indigo-200">Visualization</span>
                     </div>
                 </div>
 
                 <!-- Live Pipeline Inspection Card -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="metric-card p-5 space-y-4">
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Techniques Demonstrated in this Project:</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Text Preprocessing</p>
                             <p class="text-slate-500">Lowercasing, regex noise removal, punctuation stripping.</p>
-                            <p id="pipeCleaned" class="font-mono text-indigo-700 text-[11px] pt-2 break-words">faculty explains concept clearly lab computer slow</p>
+                            <p id="pipeCleaned" class="font-mono text-indigo-700 text-[11px] pt-1.5 break-words">faculty explains concept clearly lab computer slow</p>
                         </div>
 
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Tokenization</p>
                             <p class="text-slate-500">Splitting sentence into atomic lexical units.</p>
-                            <p id="pipeTokens" class="font-mono text-slate-700 text-[11px] pt-2 break-words">['the', 'faculty', 'explains', 'concepts', ...]</p>
+                            <p id="pipeTokens" class="font-mono text-slate-700 text-[11px] pt-1.5 break-words">['the', 'faculty', 'explains', 'concepts', ...]</p>
                         </div>
 
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Stop-word Removal</p>
                             <p class="text-slate-500">Filtering non-informative high-frequency words.</p>
-                            <p id="pipeStopwords" class="font-mono text-slate-700 text-[11px] pt-2 break-words">['faculty', 'explains', 'concepts', 'lab', ...]</p>
+                            <p id="pipeStopwords" class="font-mono text-slate-700 text-[11px] pt-1.5 break-words">['faculty', 'explains', 'concepts', 'lab', ...]</p>
                         </div>
 
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Lemmatization</p>
                             <p class="text-slate-500">WordNet root form reduction (computers &rarr; computer).</p>
-                            <p id="pipeLemmas" class="font-mono text-indigo-700 text-[11px] pt-2 break-words">['faculty', 'concept', 'lab', 'computer', ...]</p>
+                            <p id="pipeLemmas" class="font-mono text-indigo-700 text-[11px] pt-1.5 break-words">['faculty', 'concept', 'lab', 'computer', ...]</p>
                         </div>
 
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Aspect-level Sentiment</p>
                             <p class="text-slate-500">Contrastive clause parsing (Faculty [+] vs Lab [-]).</p>
-                            <p class="font-mono text-emerald-700 text-[11px] pt-2 font-semibold">Faculty: Positive | Lab: Negative</p>
+                            <p class="font-mono text-emerald-700 text-[11px] pt-1.5 font-semibold">Faculty: Positive | Lab: Negative</p>
                         </div>
 
-                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                        <div class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
                             <p class="font-bold text-slate-900">&bull; Text Classification</p>
                             <p class="text-slate-500">Balanced Logistic Regression (92.4% accuracy).</p>
-                            <p class="font-mono text-indigo-700 text-[11px] pt-2 font-semibold">Overall: Mixed (88.5% confidence)</p>
+                            <p class="font-mono text-indigo-700 text-[11px] pt-1.5 font-semibold">Overall: Mixed (88.5% confidence)</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Empirical Model Benchmark Comparison -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                <div class="metric-card overflow-hidden">
+                    <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center">
                         <div>
                             <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Empirical Model Benchmarking (5,000 Verified Records)</h3>
                             <p class="text-xs text-slate-500 mt-0.5">Evaluation metrics comparing candidate machine learning classifiers on test split.</p>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="p-3.5">Architecture / Model</th>
-                                    <th class="p-3.5">Vectorization</th>
-                                    <th class="p-3.5">Accuracy</th>
-                                    <th class="p-3.5">Precision</th>
-                                    <th class="p-3.5">Recall</th>
-                                    <th class="p-3.5">F1-Score</th>
-                                    <th class="p-3.5">Latency</th>
+                                    <th>Architecture / Model</th>
+                                    <th>Vectorization</th>
+                                    <th>Accuracy</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Latency</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100 text-slate-800">
-                                <tr class="bg-indigo-50/50 font-semibold">
-                                    <td class="p-3.5 flex items-center space-x-2">
-                                        <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                                        <span>Logistic Regression (Deployed)</span>
+                            <tbody>
+                                <tr class="bg-indigo-50/40 font-semibold">
+                                    <td class="flex items-center space-x-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                                        <span>Logistic Regression (Active Deployed)</span>
                                     </td>
-                                    <td class="p-3.5 font-mono text-[11px]">TF-IDF (1, 2)</td>
-                                    <td class="p-3.5 text-emerald-700 font-bold font-mono">92.4%</td>
-                                    <td class="p-3.5 font-mono">92.1%</td>
-                                    <td class="p-3.5 font-mono">92.4%</td>
-                                    <td class="p-3.5 font-mono">91.8%</td>
-                                    <td class="p-3.5 font-mono text-emerald-600">4.2 ms</td>
+                                    <td class="font-mono text-[11px]">TF-IDF (1, 2)</td>
+                                    <td class="text-emerald-700 font-bold font-mono">92.4%</td>
+                                    <td class="font-mono">92.1%</td>
+                                    <td class="font-mono">92.4%</td>
+                                    <td class="font-mono">91.8%</td>
+                                    <td class="font-mono text-emerald-600">4.2 ms</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3.5">Linear SVM</td>
-                                    <td class="p-3.5 font-mono text-[11px]">TF-IDF (1, 2)</td>
-                                    <td class="p-3.5 font-mono">90.7%</td>
-                                    <td class="p-3.5 font-mono">90.2%</td>
-                                    <td class="p-3.5 font-mono">90.7%</td>
-                                    <td class="p-3.5 font-mono">89.9%</td>
-                                    <td class="p-3.5 font-mono">6.8 ms</td>
+                                    <td>Linear SVM</td>
+                                    <td class="font-mono text-[11px]">TF-IDF (1, 2)</td>
+                                    <td class="font-mono">90.7%</td>
+                                    <td class="font-mono">90.2%</td>
+                                    <td class="font-mono">90.7%</td>
+                                    <td class="font-mono">89.9%</td>
+                                    <td class="font-mono">6.8 ms</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3.5">Multinomial Naive Bayes</td>
-                                    <td class="p-3.5 font-mono text-[11px]">CountVectorizer</td>
-                                    <td class="p-3.5 font-mono">84.2%</td>
-                                    <td class="p-3.5 font-mono">83.9%</td>
-                                    <td class="p-3.5 font-mono">84.2%</td>
-                                    <td class="p-3.5 font-mono">82.5%</td>
-                                    <td class="p-3.5 font-mono text-emerald-600">3.1 ms</td>
+                                    <td>Multinomial Naive Bayes</td>
+                                    <td class="font-mono text-[11px]">CountVectorizer</td>
+                                    <td class="font-mono">84.2%</td>
+                                    <td class="font-mono">83.9%</td>
+                                    <td class="font-mono">84.2%</td>
+                                    <td class="font-mono">82.5%</td>
+                                    <td class="font-mono text-emerald-600">3.1 ms</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3.5">DistilBERT (Fine-Tuned)</td>
-                                    <td class="p-3.5 font-mono text-[11px]">Transformer Embeddings</td>
-                                    <td class="p-3.5 font-mono font-bold text-indigo-700">94.1%</td>
-                                    <td class="p-3.5 font-mono">93.9%</td>
-                                    <td class="p-3.5 font-mono">94.1%</td>
-                                    <td class="p-3.5 font-mono">93.8%</td>
-                                    <td class="p-3.5 font-mono text-amber-600">72.4 ms</td>
+                                    <td>DistilBERT (Fine-Tuned)</td>
+                                    <td class="font-mono text-[11px]">Transformer Embeddings</td>
+                                    <td class="font-mono font-bold text-indigo-700">94.1%</td>
+                                    <td class="font-mono">93.9%</td>
+                                    <td class="font-mono">94.1%</td>
+                                    <td class="font-mono">93.8%</td>
+                                    <td class="font-mono text-amber-600">72.4 ms</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1040,34 +1083,34 @@
             <!-- ============================================================== -->
             <!-- VIEW 8: AUDIT & GOVERNANCE LOGS                                -->
             <!-- ============================================================== -->
-            <section id="view-audit" class="tab-pane hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
+            <section id="view-audit" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 flex justify-between items-center">
                     <div>
-                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 uppercase tracking-wider">
+                        <span class="badge-pill badge-status-new">
                             Security & Governance
                         </span>
-                        <h2 class="text-lg font-bold text-slate-900 mt-1">Audit Trail & Action Log</h2>
+                        <h2 class="text-lg font-bold text-slate-900 tracking-tight mt-1">Audit Trail & Action Log</h2>
                         <p class="text-xs text-slate-600 mt-0.5">Immutable record of all submission, evaluation, status change, and deletion events.</p>
                     </div>
-                    <button onclick="loadAuditLogs()" class="px-3.5 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center space-x-1.5">
+                    <button onclick="loadAuditLogs()" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-arrows-rotate text-xs"></i>
                         <span>Refresh Logs</span>
                     </button>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="metric-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="p-3.5 w-16">ID</th>
-                                    <th class="p-3.5 w-40">Timestamp</th>
-                                    <th class="p-3.5 w-32">Action</th>
-                                    <th class="p-3.5 w-32">User</th>
-                                    <th class="p-3.5">Details</th>
+                                    <th class="w-16">ID</th>
+                                    <th class="w-40">Timestamp</th>
+                                    <th class="w-32">Action</th>
+                                    <th class="w-32">User</th>
+                                    <th>Details</th>
                                 </tr>
                             </thead>
-                            <tbody id="auditTableBody" class="divide-y divide-slate-100 text-slate-800">
+                            <tbody id="auditTableBody">
                                 <tr><td colspan="5" class="p-6 text-center text-slate-400">Loading audit records...</td></tr>
                             </tbody>
                         </table>
@@ -1079,33 +1122,33 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- MODALS                                                                 -->
+    <!-- MODALS (Linear / Apple High-Precision Modals)                          -->
     <!-- ====================================================================== -->
 
     <!-- AUTH MODAL (Login & Register) -->
     <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-backdrop fixed inset-0" onclick="closeAuthModal()"></div>
-        <div class="modal-dialog relative bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10">
+        <div class="modal-dialog relative bg-white w-full max-w-md rounded-2xl shadow-modal border border-slate-200 overflow-hidden z-10">
             <!-- Modal Header with Tabs -->
             <div class="p-6 pb-0">
                 <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-700 flex items-center justify-center text-white text-sm">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-sm shadow-xs">
                             <i class="fa-solid fa-lock"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900" id="authModalTitle">Account Access</h3>
+                        <h3 class="text-base font-bold text-slate-900 tracking-tight" id="authModalTitle">Account Access</h3>
                     </div>
-                    <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 text-sm p-1">
+                    <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 text-sm p-1 rounded-lg">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
                 <!-- Tabs -->
                 <div class="flex border-b border-slate-200">
-                    <button onclick="setAuthTab('login')" id="authTabLogin" class="flex-1 py-2.5 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition">
+                    <button onclick="setAuthTab('login')" id="authTabLogin" class="flex-1 py-2 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition">
                         Sign In
                     </button>
-                    <button onclick="setAuthTab('register')" id="authTabRegister" class="flex-1 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition">
+                    <button onclick="setAuthTab('register')" id="authTabRegister" class="flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition">
                         Create Account
                     </button>
                 </div>
@@ -1116,24 +1159,24 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username</label>
                     <input type="text" id="loginUsername" required autocomplete="username"
-                        class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+                        class="form-input-control text-xs"
                         placeholder="e.g. admin or faculty">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password</label>
                     <input type="password" id="loginPassword" required autocomplete="current-password"
-                        class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+                        class="form-input-control text-xs"
                         placeholder="••••••••">
                 </div>
-                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 space-y-0.5">
-                    <p class="font-semibold text-slate-700">Pre-configured Demo Accounts:</p>
-                    <p>&bull; Admin: <code class="text-indigo-600">admin</code> / <code class="text-indigo-600">admin123</code></p>
-                    <p>&bull; Faculty Reviewer: <code class="text-indigo-600">faculty</code> / <code class="text-indigo-600">faculty123</code></p>
-                    <p>&bull; Student: <code class="text-indigo-600">student</code> / <code class="text-indigo-600">student123</code></p>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 space-y-1">
+                    <p class="font-semibold text-slate-800">Pre-configured Demo Accounts:</p>
+                    <p>&bull; Admin: <code class="text-indigo-600 font-mono">admin</code> / <code class="text-indigo-600 font-mono">admin123</code></p>
+                    <p>&bull; Faculty Reviewer: <code class="text-indigo-600 font-mono">faculty</code> / <code class="text-indigo-600 font-mono">faculty123</code></p>
+                    <p>&bull; Student: <code class="text-indigo-600 font-mono">student</code> / <code class="text-indigo-600 font-mono">student123</code></p>
                 </div>
                 <button type="submit" id="loginSubmitBtn"
-                    class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
-                    Sign In to EduPulse
+                    class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
+                    Sign In to EduPulse™ AI
                 </button>
             </form>
 
@@ -1142,19 +1185,19 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username <span class="text-rose-500">*</span></label>
                     <input type="text" id="regUsername" required autocomplete="username"
-                        class="w-full px-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
-                        placeholder="Unique identifier">
+                        class="form-input-control text-xs"
+                        placeholder="Unique handle">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
                     <input type="text" id="regFullName"
-                        class="w-full px-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+                        class="form-input-control text-xs"
                         placeholder="Prof. John Doe">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Role</label>
-                        <select id="regRole" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white">
+                        <select id="regRole" class="form-input-control text-xs bg-white">
                             <option value="student">Student</option>
                             <option value="faculty">Faculty Reviewer</option>
                             <option value="admin">Administrator</option>
@@ -1163,18 +1206,18 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Department</label>
                         <input type="text" id="regDept"
-                            class="w-full px-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+                            class="form-input-control text-xs"
                             placeholder="Computer Science">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password <span class="text-rose-500">*</span></label>
                     <input type="password" id="regPassword" required autocomplete="new-password" minlength="6"
-                        class="w-full px-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"
+                        class="form-input-control text-xs"
                         placeholder="Minimum 6 characters">
                 </div>
                 <button type="submit" id="regSubmitBtn"
-                    class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                    class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
                     Create New Account
                 </button>
             </form>
@@ -1184,14 +1227,14 @@
     <!-- RECORD DETAIL MODAL -->
     <div id="detailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-backdrop fixed inset-0" onclick="closeDetailModal()"></div>
-        <div class="modal-dialog relative bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col">
-            <div class="p-6 border-b border-slate-200 flex justify-between items-center shrink-0">
+        <div class="modal-dialog relative bg-white w-full max-w-2xl rounded-2xl shadow-modal border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col">
+            <div class="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
                 <div class="flex items-center space-x-2.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
-                    <h3 class="text-sm font-bold text-slate-900" id="detailModalTitle">Feedback Record Details</h3>
+                    <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                    <h3 class="text-sm font-bold text-slate-900 tracking-tight" id="detailModalTitle">Feedback Record Details</h3>
                     <span id="detailIdBadge" class="text-xs font-mono text-slate-400 bg-slate-100 px-2 py-0.5 rounded">ID: 0</span>
                 </div>
-                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1 text-sm">
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg text-sm">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -1201,10 +1244,10 @@
             </div>
 
             <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center shrink-0">
-                <button onclick="openStatusUpdateModalFromDetail()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                <button onclick="openStatusUpdateModalFromDetail()" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center">
                     <i class="fa-solid fa-pen-to-square mr-1.5"></i>Update Status & Review Notes
                 </button>
-                <button onclick="closeDetailModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-xl transition">
+                <button onclick="closeDetailModal()" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition">
                     Close
                 </button>
             </div>
@@ -1214,10 +1257,10 @@
     <!-- UPDATE STATUS & REVIEW MODAL -->
     <div id="statusModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-backdrop fixed inset-0" onclick="closeStatusModal()"></div>
-        <div class="modal-dialog relative bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10">
-            <div class="p-6 border-b border-slate-200 flex justify-between items-center">
-                <h3 class="text-sm font-bold text-slate-900" id="statusModalTitle">Update Record Status</h3>
-                <button onclick="closeStatusModal()" class="text-slate-400 hover:text-slate-600 p-1 text-sm">
+        <div class="modal-dialog relative bg-white w-full max-w-md rounded-2xl shadow-modal border border-slate-200 overflow-hidden z-10">
+            <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-slate-900 tracking-tight" id="statusModalTitle">Update Record Status</h3>
+                <button onclick="closeStatusModal()" class="text-slate-400 hover:text-slate-600 p-1 text-sm rounded-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -1227,7 +1270,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Record Workflow Status</label>
-                    <select id="statusSelect" class="w-full px-3.5 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white font-medium">
+                    <select id="statusSelect" class="form-input-control text-xs bg-white font-medium">
                         <option value="New">New</option>
                         <option value="Under Review">Under Review</option>
                         <option value="Action In Progress">Action In Progress</option>
@@ -1238,20 +1281,20 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Assignee / Department Lead</label>
                     <input type="text" id="statusAssignee" placeholder="e.g. Head of CSE / Lab Incharge"
-                        class="w-full px-3.5 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
+                        class="form-input-control text-xs">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Reviewer Notes & Action Taken</label>
                     <textarea id="statusNotes" rows="3" placeholder="Enter administrative notes, remedial actions planned, or resolution summary..."
-                        class="w-full p-3 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none"></textarea>
+                        class="form-input-control text-xs"></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
-                    <button type="button" onclick="closeStatusModal()" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+                    <button type="button" onclick="closeStatusModal()" class="px-3.5 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
                         Cancel
                     </button>
-                    <button type="submit" id="saveStatusBtn" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                    <button type="submit" id="saveStatusBtn" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
                         Save Changes
                     </button>
                 </div>
@@ -1262,21 +1305,77 @@
     <!-- DELETE CONFIRMATION MODAL -->
     <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-backdrop fixed inset-0" onclick="closeDeleteModal()"></div>
-        <div class="modal-dialog relative bg-white w-full max-w-sm rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 p-6 text-center space-y-4">
-            <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto text-xl">
+        <div class="modal-dialog relative bg-white w-full max-w-sm rounded-2xl shadow-modal border border-slate-200 overflow-hidden z-10 p-6 text-center space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto text-xl shadow-xs">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <div>
-                <h3 class="text-sm font-bold text-slate-900">Delete Feedback Record</h3>
-                <p class="text-xs text-slate-500 mt-1">Are you sure you want to delete record <span class="font-mono font-bold text-slate-800" id="deleteRecordIdBadge">#0</span>? This action is permanent and recorded in the audit log.</p>
+                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Delete Feedback Record</h3>
+                <p class="text-xs text-slate-500 mt-1">Are you sure you want to delete record <span class="font-mono font-bold text-slate-800" id="deleteRecordIdBadge">#0</span>? This action is permanent and recorded in the audit trail.</p>
             </div>
-            <div class="flex justify-center space-x-3 pt-2">
-                <button onclick="closeDeleteModal()" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+            <div class="flex justify-center space-x-2 pt-2">
+                <button onclick="closeDeleteModal()" class="px-3.5 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
                     Cancel
                 </button>
-                <button onclick="confirmRecordDelete()" id="confirmDeleteBtn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                <button onclick="confirmRecordDelete()" id="confirmDeleteBtn" class="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
                     Delete Record
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER PROFILE & SETTINGS MODAL -->
+    <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0" onclick="closeSettingsModal()"></div>
+        <div class="modal-dialog relative bg-white w-full max-w-md rounded-2xl shadow-modal border border-slate-200 overflow-hidden z-10">
+            <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900 tracking-tight">User Account & Settings</h3>
+                </div>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600 p-1 text-sm rounded-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div class="flex items-center space-x-3.5 p-3.5 bg-slate-50 rounded-xl border border-slate-200/80">
+                    <div class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center text-base font-bold shadow-xs" id="setModalAvatar">
+                        A
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900" id="setModalName">Administrator</h4>
+                        <p class="text-xs text-slate-500 font-mono" id="setModalUsername">@admin</p>
+                        <span class="inline-block mt-1 badge-pill badge-status-new text-[10px]" id="setModalRole">admin</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-1 text-xs">
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
+                        <input type="text" id="setEditName" class="form-input-control text-xs" placeholder="Full name">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1">Department</label>
+                        <input type="text" id="setEditDept" class="form-input-control text-xs" placeholder="Department">
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-3 border-t border-slate-100">
+                    <button onclick="logoutUser(); closeSettingsModal();" class="text-xs font-semibold text-rose-600 hover:text-rose-800 transition">
+                        Sign Out
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="closeSettingsModal()" class="px-3.5 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                            Close
+                        </button>
+                        <button type="button" onclick="saveProfileChanges()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-xs transition">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1286,8 +1385,8 @@
     <!-- ====================================================================== -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 space-y-2 sm:space-y-0">
-            <p>&copy; EduPulse Analytics &bull; Student Feedback NLP Project.</p>
-            <p class="font-medium text-slate-600">Python 3.13 &bull; Flask &bull; NLTK &bull; Scikit-Learn &bull; SQLite &bull; Tailwind CSS</p>
+            <p>&copy; 2026 EduPulse™ AI &bull; Academic NLP Intelligence Platform.</p>
+            <p class="font-medium text-slate-600">Linear / Stripe Design System &bull; Python 3.13 &bull; Flask &bull; NLTK &bull; Scikit-Learn</p>
         </div>
     </footer>
 
