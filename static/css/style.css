@@ -1,62 +1,74 @@
 /* ==========================================================================
    EduPulse™ AI — Enterprise Design System (Linear, Stripe & Apple Inspired)
-   Typography: Inter & JetBrains Mono
-   Aesthetics: High-precision borders, ambient shadows, glassmorphism, micro-interactions
+   Visual Identity: Deep Navy / Slate, Vibrant Indigo (#6366F1) & Royal Violet (#7C3AED)
+   Typography: Inter (-0.015em tracking) & JetBrains Mono
+   Aesthetics: Ultra-fine borders (rgba 0.85), micro-shadows, ambient glassmorphism
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
     /* Color System */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     
-    /* Neutrals */
+    /* Brand Foundation */
+    --brand-primary: #4f46e5;
+    --brand-primary-hover: #4338ca;
+    --brand-violet: #7c3aed;
+    --brand-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --brand-gradient-subtle: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+    --brand-glow: rgba(99, 102, 241, 0.18);
+
+    /* Backgrounds */
     --bg-base: #f8fafc;
     --bg-surface: #ffffff;
     --bg-surface-elevated: #ffffff;
     --bg-muted: #f1f5f9;
     --bg-subtle: #f8fafc;
+    --bg-dark: #0f172a;
+    --bg-dark-surface: #1e293b;
     
-    --border-subtle: rgba(226, 232, 240, 0.8);
+    /* Borders */
+    --border-subtle: rgba(226, 232, 240, 0.85);
     --border-default: #e2e8f0;
     --border-hover: #cbd5e1;
     --border-focus: #4f46e5;
+    --border-brand: #c7d2fe;
     
+    /* Typography Colors */
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --text-muted: #94a3b8;
     --text-on-accent: #ffffff;
     
-    /* Accents */
-    --accent: #4f46e5;
-    --accent-hover: #4338ca;
-    --accent-light: #eef2ff;
-    --accent-border: #c7d2fe;
-    
     /* Status Polarity */
     --emerald-bg: #ecfdf5;
     --emerald-text: #065f46;
     --emerald-border: #a7f3d0;
+    --emerald-dot: #10b981;
     
     --rose-bg: #fef2f2;
     --rose-text: #991b1b;
     --rose-border: #fecaca;
+    --rose-dot: #ef4444;
     
     --amber-bg: #fffbeb;
     --amber-text: #92400e;
     --amber-border: #fde68a;
+    --amber-dot: #f59e0b;
     
     --slate-bg: #f8fafc;
     --slate-text: #334155;
     --slate-border: #e2e8f0;
     
-    /* Shadows */
+    /* High Precision Elevation */
     --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    --shadow-card-hover: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
     --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
     
     --radius-sm: 0.375rem;
@@ -73,22 +85,81 @@ body {
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.011em;
+    letter-spacing: -0.015em;
 }
 
 /* --------------------------------------------------------------------------
    Glassmorphism & Header Styling
    -------------------------------------------------------------------------- */
 .glass-header {
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    background-color: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+}
+
+/* Brand Logo Mark with Gradient Pulse */
+.logo-mark {
+    background: var(--brand-gradient);
+    box-shadow: 0 4px 12px var(--brand-glow);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-mark:hover {
+    transform: scale(1.05);
 }
 
 /* --------------------------------------------------------------------------
-   Linear-Style Sidebar Navigation
+   Dropdown Menus (Header & Filter Selectors)
    -------------------------------------------------------------------------- */
+.dropdown-menu {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    animation: dropdownPop 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top right;
+}
+
+@keyframes dropdownPop {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Linear-Style Sidebar Navigation & Collapsible Rail
+   -------------------------------------------------------------------------- */
+#appSidebar {
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#appSidebar.collapsed {
+    width: 4.5rem !important;
+}
+
+#appSidebar.collapsed .sidebar-label,
+#appSidebar.collapsed .sidebar-heading,
+#appSidebar.collapsed .system-footprint-text {
+    display: none !important;
+}
+
+#appSidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 0.625rem 0.5rem;
+}
+
+#appSidebar.collapsed .sidebar-link i {
+    margin-right: 0 !important;
+    font-size: 0.95rem;
+}
+
 .sidebar-link {
     display: flex;
     align-items: center;
@@ -122,7 +193,7 @@ body {
     top: 20%;
     bottom: 20%;
     width: 3px;
-    background-color: #4f46e5;
+    background: var(--brand-gradient);
     border-radius: 0 4px 4px 0;
 }
 
@@ -135,16 +206,29 @@ body {
    -------------------------------------------------------------------------- */
 .metric-card {
     background: #ffffff;
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.85);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-sm);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .metric-card:hover {
     border-color: #cbd5e1;
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1.5px);
+}
+
+/* Subtle Card Top Highlight Accent */
+.metric-card.accent-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--brand-gradient);
 }
 
 /* --------------------------------------------------------------------------
@@ -163,6 +247,74 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* --------------------------------------------------------------------------
+   Confidence Score Meter & Progress Bars
+   -------------------------------------------------------------------------- */
+.confidence-track {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #e2e8f0;
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.confidence-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--brand-gradient);
+}
+
+.confidence-fill.positive {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.confidence-fill.negative {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.confidence-fill.mixed {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.confidence-fill.neutral {
+    background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Keywords Token Cloud Tags
+   -------------------------------------------------------------------------- */
+.token-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.5rem;
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s ease-in-out;
+}
+
+.token-chip:hover {
+    background: #eef2ff;
+    color: #4f46e5;
+    border-color: #c7d2fe;
+}
+
+.token-chip .token-weight {
+    margin-left: 0.375rem;
+    padding: 0.05rem 0.3rem;
+    background: #ffffff;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
 }
 
 /* --------------------------------------------------------------------------
@@ -382,7 +534,7 @@ body {
 
 .form-input-control:focus {
     border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
 }
 
 .form-input-control::placeholder {
