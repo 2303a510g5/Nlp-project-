@@ -718,6 +718,13 @@ def download_pdf_direct():
 def download_md_direct():
     return redirect(url_for('download_project_documentation', format='md'))
 
+@app.route('/downloads/<path:filename>', methods=['GET'])
+def serve_download_static(filename):
+    file_path = os.path.join(PROJECT_ROOT, "downloads", filename)
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
+    return jsonify({"error": "File not found"}), 404
+
 # ---------------------------------------------------------------------------
 # Audit Logs API
 # ---------------------------------------------------------------------------
