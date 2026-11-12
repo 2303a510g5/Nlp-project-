@@ -475,5 +475,27 @@ def get_recent_audit_logs(limit=25):
     conn.close()
     return [dict(r) for r in rows]
 
+def get_all_users():
+    """Retrieves all registered users without exposing password hashes."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+    SELECT id, username, email, full_name, role, department, created_at
+    FROM users
+    ORDER BY id ASC
+    """)
+    users = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return users
+
+def get_feedback_records_count():
+    """Returns total count of feedback records in SQLite."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM feedback_records")
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
 # Auto-initialize database on module import
 init_db()

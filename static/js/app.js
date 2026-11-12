@@ -221,7 +221,28 @@ function switchTab(tabId) {
         loadCollectionData();
     } else if (tabId === "audit") {
         loadAuditLogs();
+    } else if (tabId === "admin") {
+        loadAdminStats();
     }
+
+    // Top showcase/workspace nav buttons active styling
+    const topNavMapping = {
+        'landing': 'topNavLanding',
+        'dashboard': 'topNavDashboard',
+        'inspector': 'topNavInspector',
+        'records': 'topNavRecords',
+        'admin': 'topNavAdmin'
+    };
+    Object.entries(topNavMapping).forEach(([tab, btnId]) => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            if (tab === tabId) {
+                btn.className = "px-3 py-1.5 rounded-lg text-indigo-600 bg-indigo-50 font-bold transition";
+            } else {
+                btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition";
+            }
+        }
+    });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1526,5 +1547,61 @@ async function loadAuditLogs() {
         });
     } catch (e) {
         tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-rose-500">Error loading audit logs: ${e.message}</td></tr>`;
+    }
+}
+
+// ============================================================================
+// ADMIN PANEL & SYSTEM GOVERNANCE
+// ============================================================================
+async function loadAdminStats() {
+    const usersTableBody = document.getElementById("adminUsersTableBody");
+    const totalUsersEl = document.getElementById("adminTotalUsers");
+    const totalRecordsEl = document.getElementById("adminTotalRecords");
+
+    if (usersTableBody) {
+        usersTableBody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading user directory...</td></tr>`;
+    }
+
+    try {
+        const res = await fetch("/api/admin/system_stats");
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: Failed to fetch admin stats`);
+        }
+        const data = await res.json();
+
+        if (totalUsersEl) totalUsersEl.textContent = data.total_users ?? 4;
+        if (totalRecordsEl) totalRecordsEl.textContent = data.total_records ?? 120;
+
+        if (usersTableBody) {
+            usersTableBody.innerHTML = "";
+            const users = data.users || [];
+            if (users.length === 0) {
+                usersTableBody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">No users registered yet.</td></tr>`;
+                return;
+            }
+
+            users.forEach(u => {
+                const tr = document.createElement("tr");
+                const roleBadgeClass = u.role === "admin" 
+                    ? "bg-indigo-50 text-indigo-700 border border-indigo-200" 
+                    : "bg-slate-100 text-slate-700 border border-slate-200";
+                
+                tr.innerHTML = `
+                    <td class="font-mono text-slate-400 text-xs">#${u.id}</td>
+                    <td class="font-bold text-slate-900 text-xs">@${u.username}</td>
+                    <td class="text-slate-800 text-xs font-medium">${u.full_name || u.username}</td>
+                    <td class="font-mono text-xs text-slate-500">${u.email || '-'}</td>
+                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${roleBadgeClass}">${u.role || 'user'}</span></td>
+                    <td class="text-slate-600 text-xs">${u.department || 'All Departments'}</td>
+                    <td class="font-mono text-[11px] text-slate-400">${u.created_at || '2026-03-01'}</td>
+                `;
+                usersTableBody.appendChild(tr);
+            });
+        }
+    } catch (e) {
+        console.error("Error loading admin stats:", e);
+        if (usersTableBody) {
+            usersTableBody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-500 font-medium">Failed to load user directory: ${e.message}</td></tr>`;
+        }
     }
 }

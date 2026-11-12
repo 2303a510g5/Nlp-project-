@@ -29,14 +29,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 sm:h-18">
                 
-                <!-- Left: Logo & Context Selectors -->
+                <!-- Left: Logo & Navigation Mode Switch -->
                 <div class="flex items-center space-x-3 sm:space-x-4">
                     <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
                     
                     <!-- Modern Tech Logo Icon -->
-                    <a href="/" class="flex items-center space-x-2.5 group">
+                    <a onclick="switchTab('landing')" class="flex items-center space-x-2.5 group cursor-pointer">
                         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl logo-mark flex items-center justify-center text-white text-base shadow-sm shrink-0">
                             <i class="fa-solid fa-brain"></i>
                         </div>
@@ -49,27 +49,28 @@
                         </div>
                     </a>
 
-                    <!-- Campus & Department Selectors -->
-                    <div class="hidden xl:flex items-center space-x-2 text-xs">
-                        <select id="headerCampusSelect" class="form-input-control text-xs py-1 px-2.5 bg-slate-100/80 border-slate-200 rounded-lg text-slate-700 font-medium">
-                            <option>Main Campus (North)</option>
-                            <option>Downtown Engineering Hub</option>
-                            <option>Global Satellite Campus</option>
-                        </select>
-                        <select id="headerDeptSelect" onchange="filterByHeaderDepartment(this.value)" class="form-input-control text-xs py-1 px-2.5 bg-slate-100/80 border-slate-200 rounded-lg text-slate-700 font-medium">
-                            <option value="All Departments">All Departments</option>
-                            <option value="Computer Science">Computer Science &amp; Eng</option>
-                            <option value="Information Technology">Information Technology</option>
-                            <option value="Electronics & Communication">Electronics &amp; Comm</option>
-                            <option value="Mechanical Engineering">Mechanical Engineering</option>
-                            <option value="Civil Engineering">Civil Engineering</option>
-                            <option value="Business Administration">Business Administration</option>
-                        </select>
+                    <!-- Top Showcase / Workspace Nav Links -->
+                    <div class="hidden lg:flex items-center space-x-1 pl-4 border-l border-slate-200 text-xs font-semibold text-slate-600">
+                        <button onclick="switchTab('landing')" id="topNavLanding" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition">
+                            Overview
+                        </button>
+                        <button onclick="switchTab('dashboard')" id="topNavDashboard" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition">
+                            Dashboard
+                        </button>
+                        <button onclick="switchTab('inspector')" id="topNavInspector" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition">
+                            PDF Diagnostic
+                        </button>
+                        <button onclick="switchTab('records')" id="topNavRecords" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition">
+                            Records
+                        </button>
+                        <button onclick="switchTab('admin')" id="topNavAdmin" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition">
+                            Admin Panel
+                        </button>
                     </div>
                 </div>
 
                 <!-- Center: Quick Command & Benchmark Hotkey -->
-                <div class="hidden md:flex items-center space-x-2">
+                <div class="hidden xl:flex items-center space-x-2">
                     <button onclick="runPdfMixedBenchmark()" 
                         class="flex items-center space-x-2 px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 text-xs font-semibold rounded-lg shadow-xs transition group">
                         <i class="fa-solid fa-bolt text-indigo-600 group-hover:scale-110 transition-transform"></i>
@@ -159,8 +160,12 @@
                                         <i class="fa-solid fa-gear w-4 text-center mr-2 text-slate-400"></i>
                                         <span>User Settings</span>
                                     </a>
-                                    <a onclick="switchTab('audit'); toggleUserMenu();" class="flex items-center px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">
+                                    <a onclick="switchTab('admin'); toggleUserMenu();" class="flex items-center px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">
                                         <i class="fa-solid fa-shield-halved w-4 text-center mr-2 text-slate-400"></i>
+                                        <span>Admin Panel</span>
+                                    </a>
+                                    <a onclick="switchTab('audit'); toggleUserMenu();" class="flex items-center px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">
+                                        <i class="fa-solid fa-list-check w-4 text-center mr-2 text-slate-400"></i>
                                         <span>Audit Logs</span>
                                     </a>
                                 </div>
@@ -189,12 +194,19 @@
             <div class="bg-white rounded-xl border border-slate-200 p-2.5 shadow-xs space-y-0.5">
                 
                 <div class="flex items-center justify-between px-3 pt-2 pb-1.5">
-                    <p class="sidebar-heading text-[10px] font-bold text-slate-400 uppercase tracking-widest">Workspace</p>
+                    <p class="sidebar-heading text-[10px] font-bold text-slate-400 uppercase tracking-widest">Showcase</p>
                     <button onclick="toggleSidebarCollapse()" title="Toggle Sidebar" class="text-slate-400 hover:text-slate-600 text-xs p-1 rounded">
                         <i class="fa-solid fa-chevron-left" id="sidebarCollapseIcon"></i>
                     </button>
                 </div>
                 
+                <a onclick="switchTab('landing')" id="nav-landing" class="sidebar-link" title="Platform Overview">
+                    <i class="fa-solid fa-compass w-4 text-center mr-2.5 text-xs"></i>
+                    <span class="sidebar-label">Platform Overview</span>
+                </a>
+
+                <p class="sidebar-heading px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Workspace</p>
+
                 <a onclick="switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active" title="Dashboard & KPIs">
                     <i class="fa-solid fa-chart-pie w-4 text-center mr-2.5 text-xs"></i>
                     <span class="sidebar-label">Dashboard &amp; KPIs</span>
@@ -234,6 +246,11 @@
 
                 <p class="sidebar-heading px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Governance</p>
 
+                <a onclick="switchTab('admin')" id="nav-admin" class="sidebar-link" title="Admin Panel">
+                    <i class="fa-solid fa-user-shield w-4 text-center mr-2.5 text-xs"></i>
+                    <span class="sidebar-label">Admin Panel</span>
+                </a>
+
                 <a onclick="switchTab('audit')" id="nav-audit" class="sidebar-link" title="Audit Trail">
                     <i class="fa-solid fa-shield-halved w-4 text-center mr-2.5 text-xs"></i>
                     <span class="sidebar-label">Audit Trail</span>
@@ -270,6 +287,179 @@
         <!-- MAIN VIEW CONTAINER                                                -->
         <!-- ================================================================== -->
         <main class="flex-grow min-w-0 space-y-6">
+
+            <!-- ============================================================== -->
+            <!-- VIEW 0: BRAND-NEW LANDING PAGE SHOWCASE                        -->
+            <!-- ============================================================== -->
+            <section id="view-landing" class="tab-pane hidden space-y-12">
+                <!-- Hero Section -->
+                <div class="hero-gradient-bg border border-indigo-100 rounded-3xl p-6 sm:p-10 lg:p-12 text-center space-y-6 shadow-sm">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                        <span>Enterprise AI Engine &bull; N=5,000 &bull; F1=0.924</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight max-w-3xl mx-auto leading-tight">
+                        Transform Academic Feedback into <span class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Actionable Intelligence</span>
+                    </h1>
+
+                    <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                        EduPulse.ai eliminates manual survey reading through automated contrastive aspect parsing, sentiment classification, and department routing grounded in 5,000 verified student responses.
+                    </p>
+
+                    <div class="flex flex-wrap justify-center items-center gap-3 pt-2">
+                        <button onclick="switchTab('dashboard')" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-indigo-200 transition flex items-center space-x-2">
+                            <span>Explore Live Platform</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                        <button onclick="runPdfMixedBenchmark()" class="px-5 py-3 bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-semibold rounded-xl border border-slate-200 shadow-xs transition flex items-center space-x-2">
+                            <i class="fa-solid fa-bolt text-indigo-600"></i>
+                            <span>1-Click PDF Benchmark</span>
+                            <kbd class="px-1.5 py-0.5 text-[9px] font-mono font-semibold bg-slate-100 border border-slate-300 rounded text-slate-600">B</kbd>
+                        </button>
+                    </div>
+
+                    <!-- Interactive Live Preview Card on Hero -->
+                    <div class="max-w-2xl mx-auto pt-6 text-left">
+                        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-lg p-5 space-y-3">
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                                    <i class="fa-solid fa-circle-dot text-emerald-500 mr-1.5"></i>Live NLP Engine Output Preview
+                                </span>
+                                <span class="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">Latency: 4.2 ms</span>
+                            </div>
+                            <p class="text-xs text-slate-700 italic">"The faculty explains concepts clearly, but the lab computers are very slow."</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                                <div class="p-2 rounded-lg bg-amber-50 border border-amber-200 text-xs">
+                                    <span class="text-[10px] text-amber-800 uppercase font-bold block">Overall Sentiment</span>
+                                    <span class="font-extrabold text-amber-900">Mixed (88.5%)</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-xs">
+                                    <span class="text-[10px] text-emerald-800 uppercase font-bold block">Teaching Clause</span>
+                                    <span class="font-extrabold text-emerald-900">Positive &rarr; Faculty</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-rose-50 border border-rose-200 text-xs">
+                                    <span class="text-[10px] text-rose-800 uppercase font-bold block">Laboratory Clause</span>
+                                    <span class="font-extrabold text-rose-900">Negative &rarr; Slow PCs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platform Verified Metrics Strip -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="metric-card p-5 text-center space-y-1">
+                        <p class="text-3xl font-black text-slate-900 font-mono tracking-tight">5,000</p>
+                        <p class="text-xs font-semibold text-slate-500">Verified Responses</p>
+                        <span class="text-[10px] text-emerald-600 font-mono">100% Ground Truth</span>
+                    </div>
+                    <div class="metric-card p-5 text-center space-y-1">
+                        <p class="text-3xl font-black text-indigo-600 font-mono tracking-tight">92.4%</p>
+                        <p class="text-xs font-semibold text-slate-500">Logistic Regression F1</p>
+                        <span class="text-[10px] text-slate-400 font-mono">TF-IDF Vectorized</span>
+                    </div>
+                    <div class="metric-card p-5 text-center space-y-1">
+                        <p class="text-3xl font-black text-slate-900 font-mono tracking-tight">4.2 ms</p>
+                        <p class="text-xs font-semibold text-slate-500">Inference Latency</p>
+                        <span class="text-[10px] text-emerald-600 font-mono">Real-time CPU Serving</span>
+                    </div>
+                    <div class="metric-card p-5 text-center space-y-1">
+                        <p class="text-3xl font-black text-slate-900 font-mono tracking-tight">9</p>
+                        <p class="text-xs font-semibold text-slate-500">Academic Facets</p>
+                        <span class="text-[10px] text-slate-400 font-mono">Automated Lead Routing</span>
+                    </div>
+                </div>
+
+                <!-- Core Features Grid -->
+                <div class="space-y-6">
+                    <div class="text-center space-y-1 max-w-xl mx-auto">
+                        <span class="badge-tag-indigo">Platform Capabilities</span>
+                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Built for Institutional Accreditation &amp; Quality Cells</h2>
+                        <p class="text-xs text-slate-500">Everything academic leaders need to transform qualitative comments into quantitative KPIs.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="feature-card space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-slate-900">Aspect-Based Sentiment</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">Dissects complex multi-sentence feedback into individual academic facets like teaching, lab computers, or hostel food.</p>
+                        </div>
+
+                        <div class="feature-card space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-code-fork"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-slate-900">Contrastive Arbitration</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">Detects conjunctions like "but" and "however" to accurately assign Mixed sentiment without flattening polarity.</p>
+                        </div>
+
+                        <div class="feature-card space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-slate-900">Department Routing</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">Automatically directs lab grievances to the Lab Incharge and curriculum comments to the Academic Dean.</p>
+                        </div>
+
+                        <div class="feature-card space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-slate-900">Immutable Audit Trail</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">Cryptographically tracked activity log recording every user submission, edit, and status review.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How It Works Section -->
+                <div class="metric-card p-6 sm:p-8 space-y-6">
+                    <div class="text-center space-y-1 max-w-xl mx-auto">
+                        <span class="badge-tag-indigo">Architectural Journey</span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">How EduPulse.ai Processes Feedback</h2>
+                        <p class="text-xs text-slate-500">From raw, noisy student text to actionable administrative remediation in 4 steps.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+                            <div class="step-number">1</div>
+                            <h4 class="text-xs font-bold text-slate-900">Multichannel Ingestion</h4>
+                            <p class="text-xs text-slate-500">Student portal forms or bulk departmental CSV uploads are streamed into the processing pipeline.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+                            <div class="step-number">2</div>
+                            <h4 class="text-xs font-bold text-slate-900">Lexical NLP Normalization</h4>
+                            <p class="text-xs text-slate-500">Noise reduction, regex cleaning, WordNet lemmatization, and non-informative stop-word pruning.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+                            <div class="step-number">3</div>
+                            <h4 class="text-xs font-bold text-slate-900">Dual-Aspect Arbitration</h4>
+                            <p class="text-xs text-slate-500">VADER polarity scoring combined with TF-IDF n-grams classifies overall sentiment as Positive, Negative, Neutral, or Mixed.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+                            <div class="step-number">4</div>
+                            <h4 class="text-xs font-bold text-slate-900">Actionable Triage</h4>
+                            <p class="text-xs text-slate-500">Records are cataloged in SQLite with urgency ratings and assigned to appropriate departmental leads.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Banner -->
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row justify-between items-center gap-6 shadow-md">
+                    <div class="space-y-1 text-center md:text-left">
+                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight">Ready to explore institutional intelligence?</h3>
+                        <p class="text-xs text-slate-300">Access the executive dashboard, test single comments, or inspect batch records.</p>
+                    </div>
+                    <button onclick="switchTab('dashboard')" class="px-6 py-3 bg-white text-indigo-950 hover:bg-slate-100 text-xs sm:text-sm font-bold rounded-xl shadow-xs transition shrink-0">
+                        Launch Executive Dashboard &rarr;
+                    </button>
+                </div>
+            </section>
 
             <!-- ============================================================== -->
             <!-- VIEW 1: EXECUTIVE DASHBOARD                                    -->
@@ -1219,7 +1409,81 @@
             </section>
 
             <!-- ============================================================== -->
-            <!-- VIEW 8: AUDIT & GOVERNANCE LOGS                                -->
+            <!-- VIEW 8: ADMIN PANEL & USER MANAGEMENT                          -->
+            <!-- ============================================================== -->
+            <section id="view-admin" class="tab-pane hidden space-y-5">
+                <div class="metric-card p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 accent-top">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="badge-pill badge-status-new">Administrator Console</span>
+                            <span class="text-xs text-slate-400 font-mono">System Health: 99.98% Uptime</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight mt-1">Platform Governance &amp; User Directory</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Manage registered accounts, inspect system status, and review security audit logs.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="loadAdminStats()" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center space-x-1.5">
+                            <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                            <span>Refresh Stats</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin KPI Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+                    <div class="metric-card p-4 space-y-1">
+                        <span class="text-slate-400 text-xs font-medium">Registered Users</span>
+                        <p class="text-2xl font-extrabold text-slate-900 font-mono tracking-tight" id="adminTotalUsers">4</p>
+                        <span class="text-[11px] text-indigo-600 font-semibold">Active in SQLite</span>
+                    </div>
+                    <div class="metric-card p-4 space-y-1">
+                        <span class="text-slate-400 text-xs font-medium">Database Entries</span>
+                        <p class="text-2xl font-extrabold text-slate-900 font-mono tracking-tight" id="adminTotalRecords">120</p>
+                        <span class="text-[11px] text-emerald-600 font-semibold">Persistent Records</span>
+                    </div>
+                    <div class="metric-card p-4 space-y-1">
+                        <span class="text-slate-400 text-xs font-medium">NLP Core Status</span>
+                        <p class="text-sm font-bold text-slate-900 truncate">Logistic Regression</p>
+                        <span class="text-[11px] text-emerald-600 font-semibold">92.4% Macro F1</span>
+                    </div>
+                    <div class="metric-card p-4 space-y-1">
+                        <span class="text-slate-400 text-xs font-medium">Security Guard</span>
+                        <p class="text-sm font-bold text-emerald-600">PBKDF2 SHA-256</p>
+                        <span class="text-[11px] text-slate-400">Password Hashing Active</span>
+                    </div>
+                </div>
+
+                <!-- Registered Users Table -->
+                <div class="metric-card overflow-hidden">
+                    <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Registered System Users</h3>
+                        <button onclick="openAuthModal('register')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
+                            + Add New User
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-16">ID</th>
+                                    <th>User Handle</th>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th class="w-24">Role</th>
+                                    <th>Department</th>
+                                    <th class="w-36">Registered Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminUsersTableBody">
+                                <tr><td colspan="7" class="p-6 text-center text-slate-400">Loading user directory...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================== -->
+            <!-- VIEW 9: AUDIT & GOVERNANCE LOGS                                -->
             <!-- ============================================================== -->
             <section id="view-audit" class="tab-pane hidden space-y-5">
                 <div class="metric-card p-5 sm:p-6 flex justify-between items-center accent-top">

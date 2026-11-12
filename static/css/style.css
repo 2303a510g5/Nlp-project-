@@ -588,3 +588,57 @@ body {
 .star-btn:hover {
     transform: scale(1.18);
 }
+
+/* --------------------------------------------------------------------------
+   Brand-New Landing Page & Hero Aesthetics
+   -------------------------------------------------------------------------- */
+.hero-gradient-bg {
+    background: radial-gradient(80% 60% at 50% -10%, rgba(99, 102, 241, 0.12) 0%, rgba(248, 250, 252, 0) 100%);
+}
+
+.feature-card {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.feature-card:hover {
+    border-color: #c7d2fe;
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+}
+
+.step-number {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    background: var(--brand-gradient);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    box-shadow: 0 4px 10px var(--brand-glow);
+    flex-shrink: 0;
+}
+
+.badge-tag-indigo {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background-color: #eef2ff;
+    color: #4f46e5;
+    border: 1px solid #c7d2fe;
+}
+
