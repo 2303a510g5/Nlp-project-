@@ -843,78 +843,65 @@
     <!-- ====================================================================== -->
     <div id="workspaceExperience" class="hidden min-h-screen flex flex-col bg-slate-50">
         
-        <header class="glass-header sticky top-0 z-40">
+        <header class="glass-header sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 sm:h-18">
+            <div class="flex justify-between items-center h-16">
                 
-                <!-- Left: Logo & Navigation Mode Switch -->
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition">
+                <!-- Left: Logo & Breadcrumb Navigation -->
+                <div class="flex items-center space-x-3 shrink-0">
+                    <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition" title="Toggle Navigation">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
                     
                     <!-- Modern Tech Logo Icon -->
-                    <a onclick="switchTab('landing')" class="flex items-center space-x-2.5 group cursor-pointer">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl logo-mark flex items-center justify-center text-white text-base shadow-sm shrink-0">
+                    <a onclick="goToLanding()" class="flex items-center space-x-2.5 group cursor-pointer" title="Go to Home Showcase">
+                        <div class="w-9 h-9 rounded-xl logo-mark flex items-center justify-center text-white text-base shadow-sm shrink-0">
                             <i class="fa-solid fa-brain"></i>
                         </div>
-                        <div>
-                            <div class="flex items-center space-x-1.5">
-                                <span class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">EduPulse<span class="text-[#10B981] font-extrabold">.ai</span></span>
-                                <span class="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 uppercase tracking-widest">Enterprise v3.4</span>
-                            </div>
-                            <p class="hidden sm:block text-[10px] font-medium text-slate-400 -mt-0.5">Academic Feedback NLP & Sentiment Engine</p>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-base font-bold text-slate-900 tracking-tight">EduPulse<span class="text-[#10B981] font-extrabold">.ai</span></span>
+                            <span class="hidden sm:inline-flex px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 uppercase tracking-wider">Enterprise</span>
                         </div>
                     </a>
 
-                    <!-- Top Showcase / Workspace Nav Links -->
-                    <div class="hidden lg:flex items-center space-x-1 pl-4 border-l border-slate-200 text-xs font-semibold text-slate-600">
-                        <button onclick="switchTab('landing')" id="topNavLanding" class="px-3 py-1.5 rounded-lg hover:text-[#10B981] hover:bg-slate-100 transition">
-                            Overview
-                        </button>
-                        <button onclick="switchTab('dashboard')" id="topNavDashboard" class="px-3 py-1.5 rounded-lg hover:text-[#10B981] hover:bg-slate-100 transition">
-                            Dashboard
-                        </button>
-                        <button onclick="switchTab('inspector')" id="topNavInspector" class="px-3 py-1.5 rounded-lg hover:text-[#10B981] hover:bg-slate-100 transition">
-                            PDF Diagnostic
-                        </button>
-                        <button onclick="switchTab('records')" id="topNavRecords" class="px-3 py-1.5 rounded-lg hover:text-[#10B981] hover:bg-slate-100 transition">
-                            Records
-                        </button>
-                        <button onclick="switchTab('admin')" id="topNavAdmin" class="px-3 py-1.5 rounded-lg hover:text-[#10B981] hover:bg-slate-100 transition">
-                            Admin Panel
-                        </button>
+                    <!-- Subtle Breadcrumb -->
+                    <div class="hidden md:flex items-center space-x-2 pl-3 border-l border-slate-200 text-xs">
+                        <span class="text-slate-400">/</span>
+                        <span class="font-semibold text-slate-700" id="currentSectionTitle">Dashboard &amp; KPIs</span>
                     </div>
                 </div>
 
-                <!-- Center: Quick Command & Benchmark Hotkey -->
-                <div class="hidden xl:flex items-center space-x-2">
-                    <button onclick="runPdfMixedBenchmark()" 
-                        class="flex items-center space-x-2 px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-[#D1FAE5]/80 text-xs font-semibold rounded-lg shadow-xs transition group">
-                        <i class="fa-solid fa-bolt text-[#10B981] group-hover:scale-110 transition-transform"></i>
-                        <span>1-Click PDF Benchmark</span>
-                        <kbd class="px-1.5 py-0.5 text-[9px] font-mono font-semibold bg-white border border-[#D1FAE5] rounded text-emerald-700">B</kbd>
-                    </button>
-
-                    <div class="flex items-center space-x-2 text-xs font-medium text-slate-500 bg-slate-100/70 px-3 py-1.5 rounded-lg border border-slate-200/80">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="font-mono text-[11px] text-slate-600">5,000 Verified Records &bull; Online</span>
+                <!-- Center: Sleek Quick Search Bar -->
+                <div class="hidden md:flex items-center justify-center flex-1 max-w-sm lg:max-w-md mx-4">
+                    <div onclick="focusGlobalSearch()" class="w-full flex items-center justify-between px-3 py-1.5 text-xs text-slate-400 bg-slate-50 hover:bg-slate-100/90 border border-slate-200 rounded-lg cursor-pointer transition shadow-2xs">
+                        <div class="flex items-center space-x-2 truncate">
+                            <i class="fa-solid fa-magnifying-glass text-[11px] text-slate-400"></i>
+                            <span class="text-slate-500 truncate">Search feedback, faculty, or topics...</span>
+                        </div>
+                        <kbd class="px-1.5 py-0.5 text-[9px] font-mono bg-white border border-slate-200 rounded text-slate-400 shrink-0 ml-2 shadow-2xs">/</kbd>
                     </div>
                 </div>
 
-                <!-- Right: Quick Search, Notifications & User Auth Section -->
-                <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Right: Benchmark, Live Telemetry Status, Alerts & Auth -->
+                <div class="flex items-center space-x-2.5 sm:space-x-3 shrink-0">
                     
-                    <!-- Quick Search Trigger -->
-                    <button onclick="focusGlobalSearch()" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 text-xs text-slate-400 bg-slate-100 hover:bg-slate-200/70 border border-slate-200 rounded-lg transition">
-                        <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
-                        <span>Quick search...</span>
-                        <kbd class="px-1 py-0.2 text-[9px] font-mono bg-white border border-slate-300 rounded text-slate-500">/</kbd>
+                    <!-- 1-Click PDF Benchmark Button -->
+                    <button onclick="runPdfMixedBenchmark()" 
+                        class="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-[#065F46] border border-emerald-200 text-xs font-semibold rounded-lg shadow-2xs transition whitespace-nowrap group cursor-pointer"
+                        title="Run mixed sentiment benchmark">
+                        <i class="fa-solid fa-bolt text-[#10B981] group-hover:scale-110 transition-transform"></i>
+                        <span>Benchmark</span>
                     </button>
+
+                    <!-- Live Telemetry Status Pill (Guaranteed Single Line) -->
+                    <div class="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs whitespace-nowrap select-none">
+                        <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
+                        <span class="font-mono text-[11px] font-medium text-slate-700">5,000 Records</span>
+                    </div>
 
                     <!-- Notifications Dropdown Trigger -->
                     <div class="relative">
-                        <button onclick="toggleNotificationsPanel()" class="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition">
+                        <button onclick="toggleNotificationsPanel()" class="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition relative cursor-pointer" title="Notifications">
                             <i class="fa-solid fa-bell text-sm"></i>
                             <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-[#10B981] rounded-full ring-2 ring-white"></span>
                         </button>
@@ -943,30 +930,26 @@
                     </div>
 
                     <!-- Auth Control Widget -->
-                    <div id="authNavContainer" class="flex items-center space-x-2">
-                        <!-- Unauthenticated State (default) -->
-                        <div id="unauthControls" class="flex items-center space-x-2">
-                            <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 text-xs font-bold text-[#102A24] hover:text-[#065F46] bg-white hover:bg-emerald-50 border border-[#D1FAE5] rounded-lg transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-                                <i class="fa-solid fa-arrow-right-to-bracket text-xs text-[#10B981]"></i>
+                    <div id="authNavContainer" class="flex items-center">
+                        <!-- Unauthenticated State (Clean Single Sign In Button) -->
+                        <div id="unauthControls" class="flex items-center">
+                            <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 text-xs font-bold text-white bg-[#10B981] hover:bg-[#059669] rounded-lg shadow-xs transition flex items-center space-x-1.5 cursor-pointer whitespace-nowrap">
+                                <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
                                 <span>Sign In</span>
-                            </button>
-                            <button onclick="openAuthModal('register')" class="px-3.5 py-1.5 text-xs font-bold text-white bg-[#10B981] hover:bg-[#059669] rounded-lg shadow-xs transition flex items-center space-x-1.5 cursor-pointer">
-                                <i class="fa-solid fa-user-plus text-xs"></i>
-                                <span>Sign Up</span>
                             </button>
                         </div>
 
                         <!-- Authenticated State -->
                         <div id="authControls" class="hidden relative">
-                            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition text-left group">
+                            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 p-1 sm:px-2 sm:py-1 rounded-lg hover:bg-slate-100 border border-slate-200/80 transition text-left group cursor-pointer">
                                 <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#10B981] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs" id="userAvatarBadge">
                                     A
                                 </div>
                                 <div class="hidden sm:block">
-                                    <p class="text-xs font-bold text-slate-900 leading-tight group-hover:text-[#10B981] transition" id="userNameLabel">Admin</p>
+                                    <p class="text-xs font-bold text-slate-900 leading-tight group-hover:text-[#10B981] transition truncate max-w-[100px]" id="userNameLabel">Admin</p>
                                     <span class="text-[9px] font-mono font-semibold uppercase tracking-wider text-emerald-700" id="userRoleBadge">admin</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-slate-600 ml-1"></i>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-slate-600 ml-0.5"></i>
                             </button>
 
                             <!-- Profile Menu Dropdown -->
@@ -987,6 +970,10 @@
                                     <a onclick="switchTab('audit'); toggleUserMenu();" class="flex items-center px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">
                                         <i class="fa-solid fa-list-check w-4 text-center mr-2 text-slate-400"></i>
                                         <span>Audit Logs</span>
+                                    </a>
+                                    <a onclick="goToLanding(); toggleUserMenu();" class="flex items-center px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">
+                                        <i class="fa-solid fa-compass w-4 text-center mr-2 text-slate-400"></i>
+                                        <span>Home Showcase</span>
                                     </a>
                                 </div>
                                 <div class="pt-1 border-t border-slate-100">
@@ -1010,12 +997,12 @@
     <div class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex gap-6">
 
         <!-- Left Navigation Sidebar (Linear / Vercel style) -->
-        <aside id="appSidebar" class="hidden lg:block w-60 shrink-0 space-y-5">
+        <aside id="appSidebar" class="hidden lg:block w-60 shrink-0 space-y-4 sticky top-20 self-start">
             <div class="bg-white rounded-xl border border-slate-200 p-2.5 shadow-xs space-y-0.5">
                 
                 <div class="flex items-center justify-between px-3 pt-2 pb-1.5">
                     <p class="sidebar-heading text-[10px] font-bold text-slate-400 uppercase tracking-widest">Showcase</p>
-                    <button onclick="toggleSidebarCollapse()" title="Toggle Sidebar" class="text-slate-400 hover:text-slate-600 text-xs p-1 rounded">
+                    <button onclick="toggleSidebarCollapse()" title="Toggle Sidebar" class="text-slate-400 hover:text-slate-600 text-xs p-1 rounded cursor-pointer">
                         <i class="fa-solid fa-chevron-left" id="sidebarCollapseIcon"></i>
                     </button>
                 </div>
@@ -1084,17 +1071,17 @@
             </div>
 
             <!-- Compact System Footprint Card -->
-            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-4 rounded-xl shadow-xs space-y-2.5">
-                <div class="flex items-center justify-between text-[10px] font-mono text-indigo-300 uppercase tracking-wider">
+            <div class="bg-[#0B2922] border border-emerald-900/60 text-white p-3.5 rounded-xl shadow-xs space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono text-emerald-300 uppercase tracking-wider">
                     <span class="system-footprint-text">Verified Dataset</span>
                     <i class="fa-solid fa-circle-check text-emerald-400"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold font-mono tracking-tight">5,000</h3>
-                    <p class="system-footprint-text text-[11px] text-slate-300">Multi-Aspect Student Reviews</p>
+                    <h3 class="text-lg font-bold font-mono tracking-tight text-white">5,000 Reviews</h3>
+                    <p class="system-footprint-text text-[11px] text-slate-400">Multi-Aspect Corpus</p>
                 </div>
-                <div class="system-footprint-text pt-2 border-t border-slate-800 text-[10px] font-mono flex items-center justify-between text-slate-400">
-                    <span>Logistic Regression</span>
+                <div class="system-footprint-text pt-2 border-t border-emerald-900/60 text-[10px] font-mono flex items-center justify-between text-slate-400">
+                    <span>NLP Accuracy</span>
                     <span class="text-emerald-400 font-bold">92.4% F1</span>
                 </div>
             </div>

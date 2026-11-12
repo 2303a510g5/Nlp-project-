@@ -237,6 +237,23 @@ function switchTab(tabId) {
     if (targetPane) targetPane.classList.remove("hidden");
     if (targetLink) targetLink.classList.add("active");
 
+    // Update Top App Bar Breadcrumb
+    const sectionNames = {
+        'dashboard': 'Dashboard & KPIs',
+        'inspector': 'PDF Diagnostic Studio',
+        'submit': 'Submit Feedback',
+        'records': 'Records Database',
+        'collection': 'Collection Summary',
+        'batch': 'Batch CSV Ingestion',
+        'pipeline': 'NLP Pipeline & Model',
+        'admin': 'Admin Panel',
+        'audit': 'Audit Trail'
+    };
+    const titleEl = document.getElementById("currentSectionTitle");
+    if (titleEl && sectionNames[tabId]) {
+        titleEl.textContent = sectionNames[tabId];
+    }
+
     // Close mobile sidebar if open
     const sidebar = document.getElementById("appSidebar");
     const backdrop = document.getElementById("mobileBackdrop");
@@ -1284,9 +1301,10 @@ function renderDashSentimentChart(data) {
                     counts.Negative || 0,
                     counts.Mixed || 0
                 ],
-                backgroundColor: ['#059669', '#64748b', '#dc2626', '#d97706'],
+                backgroundColor: ['#10B981', '#94A3B8', '#F43F5E', '#F59E0B'],
                 borderWidth: 2,
-                borderColor: '#ffffff'
+                borderColor: '#ffffff',
+                hoverOffset: 4
             }]
         },
         options: {
@@ -1294,7 +1312,16 @@ function renderDashSentimentChart(data) {
             maintainAspectRatio: false,
             cutout: '72%',
             plugins: {
-                legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' } } }
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 10,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        padding: 14,
+                        font: { size: 11, family: 'Inter', weight: '500' }
+                    }
+                }
             }
         }
     });
@@ -1317,18 +1344,37 @@ function renderDashIssuesChart(data) {
             datasets: [{
                 label: 'Complaints Reported',
                 data: values,
-                backgroundColor: '#10B981',
-                borderRadius: 4
+                backgroundColor: [
+                    '#F43F5E',
+                    '#FB7185',
+                    '#F87171',
+                    '#FB923C',
+                    '#F59E0B'
+                ],
+                borderRadius: 6
             }]
         },
         options: {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.parsed.x} complaints reported`
+                    }
+                }
+            },
             scales: {
-                x: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10, family: 'Inter' } } },
-                y: { grid: { display: false }, ticks: { font: { size: 10, family: 'Inter' } } }
+                x: {
+                    grid: { color: '#f8fafc' },
+                    ticks: { font: { size: 10, family: 'Inter' } }
+                },
+                y: {
+                    grid: { display: false },
+                    ticks: { font: { size: 10, family: 'Inter', weight: '500' } }
+                }
             }
         }
     });
