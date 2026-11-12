@@ -41,62 +41,71 @@ ASPECT_REGISTRY = {
             "faculty", "teacher", "professor", "prof", "teaching", "teach", "lecture",
             "concept", "explain", "explanation", "guidance", "approachable", "instructor", "doubts"
         ],
-        "category": "Faculty/Teaching"
+        "category": "Faculty/Teaching",
+        "department_lead": "Dean of Academic Affairs"
     },
     "Laboratory": {
         "keywords": [
             "lab", "laboratory", "computer", "system", "equipment", "experiment",
             "practical", "software", "machine", "hardware", "tool", "device", "pc"
         ],
-        "category": "Laboratory"
+        "category": "Laboratory",
+        "department_lead": "Head of Laboratories / Systems Manager"
     },
     "Infrastructure": {
         "keywords": [
             "classroom", "campus", "bench", "ventilation", "building", "facility",
             "ac", "air conditioning", "fan", "furniture", "restroom", "cleanliness", "maintenance"
         ],
-        "category": "Infrastructure"
+        "category": "Infrastructure",
+        "department_lead": "Campus Facilities Directorate"
     },
     "Curriculum": {
         "keywords": [
             "curriculum", "syllabus", "subject", "course", "content", "theory",
             "study material", "notes", "credit", "relevance"
         ],
-        "category": "Curriculum"
+        "category": "Curriculum",
+        "department_lead": "Board of Studies & Curriculum Committee"
     },
     "Examination": {
         "keywords": [
             "exam", "examination", "test", "schedule", "evaluates", "evaluation",
             "grading", "marks", "timing", "congested", "question paper", "timetable"
         ],
-        "category": "Examination"
+        "category": "Examination",
+        "department_lead": "Controller of Examinations"
     },
     "Internet": {
         "keywords": [
             "internet", "wifi", "wi-fi", "network", "connectivity", "speed",
             "connection", "bandwidth", "signal"
         ],
-        "category": "Internet"
+        "category": "Internet",
+        "department_lead": "IT Network Operations Center"
     },
     "Canteen": {
         "keywords": [
             "canteen", "food", "pricing", "price", "expensive", "meal",
             "cafeteria", "lunch", "taste", "hygiene", "snack"
         ],
-        "category": "Canteen"
+        "category": "Canteen",
+        "department_lead": "Hospitality & Canteen Committee"
     },
     "Hostel": {
         "keywords": [
             "hostel", "room", "mess", "water", "electricity", "warden",
             "stay", "accommodation", "washroom"
         ],
-        "category": "Hostel"
+        "category": "Hostel",
+        "department_lead": "Chief Warden / Student Welfare"
     },
     "Library": {
         "keywords": [
             "library", "book", "journal", "resource", "reading", "volume", "books", "librarian"
         ],
-        "category": "Library"
+        "category": "Library",
+        "department_lead": "Chief Librarian / Learning Resource Center"
     }
 }
 
@@ -139,11 +148,30 @@ def extract_lexical_trace(text: str):
     return raw_tokens, tokens_no_stops, lemmas
 
 # ---------------------------------------------------------------------------
+# Path Resolution Helper
+# ---------------------------------------------------------------------------
+def resolve_path(filename: str) -> str:
+    """Finds absolute path of a file across workspace root, local dir, or parent dirs."""
+    if os.path.isabs(filename) and os.path.exists(filename):
+        return filename
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        filename,
+        os.path.join(base_dir, filename),
+        os.path.join(os.path.dirname(base_dir), filename),
+        os.path.join(base_dir, "..", filename)
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return os.path.abspath(c)
+    return os.path.abspath(os.path.join(base_dir, filename))
+
+# ---------------------------------------------------------------------------
 # Core Analytical Engine
 # ---------------------------------------------------------------------------
 class AcademicFeedbackEngine:
     def __init__(self, dataset_path="Student_Feedback_Analyzer_NLP_Cleaned_5000.csv"):
-        self.dataset_path = dataset_path
+        self.dataset_path = resolve_path(dataset_path)
         self.vectorizer = None
         self.sentiment_model = None
         self.df = None
@@ -151,8 +179,8 @@ class AcademicFeedbackEngine:
 
     def _initialize_subsystem(self):
         """Loads cached models or compiles models from the primary corpus."""
-        model_file = os.path.join("models", "sentiment_model.joblib")
-        vec_file = os.path.join("models", "vectorizer.joblib")
+        model_file = resolve_path(os.path.join("models", "sentiment_model.joblib"))
+        vec_file = resolve_path(os.path.join("models", "vectorizer.joblib"))
 
         if os.path.exists(model_file) and os.path.exists(vec_file):
             try:
