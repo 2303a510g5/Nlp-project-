@@ -316,16 +316,31 @@ async function checkAuthSession() {
 }
 
 function renderAuthUserUI() {
-    document.getElementById("unauthControls").classList.add("hidden");
+    // Workspace header controls
+    const unauth = document.getElementById("unauthControls");
+    if (unauth) unauth.classList.add("hidden");
     const authBox = document.getElementById("authControls");
-    authBox.classList.remove("hidden");
+    if (authBox) authBox.classList.remove("hidden");
+
+    // Landing navbar controls
+    const landUnauth = document.getElementById("landingUnauthControls");
+    if (landUnauth) landUnauth.classList.add("hidden");
+    const landAuth = document.getElementById("landingAuthControls");
+    if (landAuth) landAuth.classList.remove("hidden");
 
     const initial = (currentUser.username || "U").charAt(0).toUpperCase();
-    document.getElementById("userAvatarBadge").textContent = initial;
-    document.getElementById("userNameLabel").textContent = currentUser.full_name || currentUser.username;
+    const avatarBadge = document.getElementById("userAvatarBadge");
+    if (avatarBadge) avatarBadge.textContent = initial;
+    const nameLabel = document.getElementById("userNameLabel");
+    if (nameLabel) nameLabel.textContent = currentUser.full_name || currentUser.username;
+
+    const landAvatar = document.getElementById("landingUserAvatar");
+    if (landAvatar) landAvatar.textContent = initial;
+    const landName = document.getElementById("landingUserName");
+    if (landName) landName.textContent = currentUser.full_name || currentUser.username;
     
     const roleBadge = document.getElementById("userRoleBadge");
-    roleBadge.textContent = currentUser.role || "student";
+    if (roleBadge) roleBadge.textContent = currentUser.role || "student";
 
     const menuFullName = document.getElementById("menuFullName");
     if (menuFullName) menuFullName.textContent = currentUser.full_name || currentUser.username;
@@ -334,19 +349,26 @@ function renderAuthUserUI() {
 }
 
 function renderUnauthUI() {
-    document.getElementById("unauthControls").classList.remove("hidden");
-    document.getElementById("authControls").classList.add("hidden");
+    const unauth = document.getElementById("unauthControls");
+    if (unauth) unauth.classList.remove("hidden");
+    const authBox = document.getElementById("authControls");
+    if (authBox) authBox.classList.add("hidden");
+
+    const landUnauth = document.getElementById("landingUnauthControls");
+    if (landUnauth) landUnauth.classList.remove("hidden");
+    const landAuth = document.getElementById("landingAuthControls");
+    if (landAuth) landAuth.classList.add("hidden");
 }
 
 function openAuthModal(tab = "login") {
     const modal = document.getElementById("authModal");
-    modal.classList.remove("hidden");
+    if (modal) modal.classList.remove("hidden");
     setAuthTab(tab);
 }
 
 function closeAuthModal() {
     const modal = document.getElementById("authModal");
-    modal.classList.add("hidden");
+    if (modal) modal.classList.add("hidden");
 }
 
 function setAuthTab(tab) {
@@ -356,18 +378,38 @@ function setAuthTab(tab) {
     const tabReg = document.getElementById("authTabRegister");
 
     if (tab === "login") {
-        loginForm.classList.remove("hidden");
-        regForm.classList.add("hidden");
-        tabLogin.className = "flex-1 py-2 text-xs font-bold text-emerald-600 border-b-2 border-indigo-600 transition";
-        tabReg.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
-        document.getElementById("authModalTitle").textContent = "Sign In to EduPulse™ AI";
+        if (loginForm) loginForm.classList.remove("hidden");
+        if (regForm) regForm.classList.add("hidden");
+        if (tabLogin) tabLogin.className = "flex-1 py-2 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition";
+        if (tabReg) tabReg.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        const title = document.getElementById("authModalTitle");
+        if (title) title.textContent = "Sign In to EduPulse™ AI";
     } else {
-        loginForm.classList.add("hidden");
-        regForm.classList.remove("hidden");
-        tabReg.className = "flex-1 py-2 text-xs font-bold text-emerald-600 border-b-2 border-indigo-600 transition";
-        tabLogin.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
-        document.getElementById("authModalTitle").textContent = "Create an Account";
+        if (loginForm) loginForm.classList.add("hidden");
+        if (regForm) regForm.classList.remove("hidden");
+        if (tabReg) tabReg.className = "flex-1 py-2 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition";
+        if (tabLogin) tabLogin.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        const title = document.getElementById("authModalTitle");
+        if (title) title.textContent = "Create an Account / Sign Up";
     }
+}
+
+function quickFillLogin(role) {
+    setAuthTab('login');
+    const userEl = document.getElementById("loginUsername");
+    const passEl = document.getElementById("loginPassword");
+    if (!userEl || !passEl) return;
+    if (role === 'admin') {
+        userEl.value = 'admin';
+        passEl.value = 'admin123';
+    } else if (role === 'faculty') {
+        userEl.value = 'faculty';
+        passEl.value = 'faculty123';
+    } else if (role === 'student') {
+        userEl.value = 'student';
+        passEl.value = 'student123';
+    }
+    showToast("info", "Credentials Filled", `Loaded credentials for ${role}. Click Sign In!`);
 }
 
 async function handleLoginSubmit(event) {
@@ -1851,4 +1893,4 @@ async function loadLandingCharts() {
     } catch (e) {
         console.warn("Could not load landing preview charts:", e);
     }
-}}
+}

@@ -528,18 +528,18 @@ body {
     width: 100%;
     padding: 0.625rem 0.875rem;
     font-size: 0.8125rem;
-    color: #0f172a;
+    color: #102A24;
     background-color: #ffffff;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #D1FAE5;
     border-radius: var(--radius-lg);
     outline: none;
     transition: all 0.15s ease-in-out;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: 0 1px 2px 0 rgba(7, 27, 23, 0.02);
 }
 
 .form-input-control:focus {
     border-color: #10B981;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
 .form-input-control::placeholder {
@@ -550,14 +550,16 @@ body {
    Drag and Drop Upload Box
    -------------------------------------------------------------------------- */
 .drag-drop-zone {
-    border: 2px dashed #cbd5e1;
+    border: 2px dashed #D1FAE5;
     border-radius: var(--radius-xl);
     background-color: #fafbfd;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .drag-drop-zone:hover {
-    border-color: #818cf8;
+    border-color: #10B981;
+    background-color: #ECFDF5;
+}
     background-color: #f5f7ff;
 }
 
