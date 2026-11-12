@@ -86,6 +86,14 @@
                         </button>
                     </div>
 
+                    <!-- Direct Doc Download Button in Nav -->
+                    <a href="/download/docx" download="EduPulse_AI_Project_Documentation.docx" 
+                        class="hidden md:inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-200 hover:text-white border border-emerald-500/40 rounded-full hover:bg-emerald-900/40 transition cursor-pointer"
+                        title="Download Complete Project Documentation (.docx)">
+                        <i class="fa-solid fa-file-arrow-down text-[#34D399]"></i>
+                        <span>Docs (.docx)</span>
+                    </a>
+
                     <!-- Explore Platform Primary CTA -->
                     <button onclick="goToWorkspace('dashboard')" class="btn-pill-primary text-xs py-1.5 sm:py-2 px-3.5 sm:px-4 shadow-sm group flex items-center space-x-1.5 cursor-pointer">
                         <span>Explore Platform</span>
@@ -209,10 +217,16 @@
                         <span>Analyze Feedback</span>
                     </button>
                     <button onclick="runPdfMixedBenchmark(); goToWorkspace('inspector');" 
-                        class="w-full sm:w-auto text-xs py-3 px-4 font-semibold text-emerald-700 bg-emerald-50/80 hover:bg-emerald-100/80 rounded-full border border-[#D1FAE5] transition flex items-center justify-center space-x-1.5">
+                        class="w-full sm:w-auto text-xs py-3 px-4 font-semibold text-emerald-700 bg-emerald-50/80 hover:bg-emerald-100/80 rounded-full border border-[#D1FAE5] transition flex items-center justify-center space-x-1.5 cursor-pointer">
                         <i class="fa-solid fa-bolt text-[#10B981]"></i>
                         <span>1-Click PDF Benchmark</span>
                     </button>
+                    <a href="/download/docx" download="EduPulse_AI_Project_Documentation.docx" 
+                        class="w-full sm:w-auto text-xs py-3 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 hover:text-slate-900 rounded-full border border-slate-200 shadow-2xs transition flex items-center justify-center space-x-1.5 cursor-pointer"
+                        title="Download Complete Project Documentation (.docx Word format)">
+                        <i class="fa-solid fa-file-word text-[#2B579A]"></i>
+                        <span>Download Docs (.docx)</span>
+                    </a>
                 </div>
 
                 <!-- Interactive Hero Live Quick AI Analyzer Bar -->
@@ -893,6 +907,14 @@
                         <span>Benchmark</span>
                     </button>
 
+                    <!-- Direct Docs Download Button -->
+                    <a href="/download/docx" download="EduPulse_AI_Project_Documentation.docx" 
+                        class="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold rounded-lg shadow-2xs transition whitespace-nowrap group cursor-pointer"
+                        title="Download Complete Project Documentation (.docx Word file)">
+                        <i class="fa-solid fa-file-word text-blue-600 group-hover:scale-110 transition-transform"></i>
+                        <span>Docs (.docx)</span>
+                    </a>
+
                     <!-- Live Telemetry Status Pill (Guaranteed Single Line) -->
                     <div class="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs whitespace-nowrap select-none">
                         <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
@@ -1049,6 +1071,18 @@
                 <a onclick="switchTab('pipeline')" id="nav-pipeline" class="sidebar-link" title="NLP Pipeline & Model">
                     <i class="fa-solid fa-diagram-project w-4 text-center mr-2.5 text-xs"></i>
                     <span class="sidebar-label">NLP Pipeline &amp; Model</span>
+                </a>
+
+                <p class="sidebar-heading px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Documentation</p>
+
+                <a href="/download/docx" download="EduPulse_AI_Project_Documentation.docx" id="nav-download-docx" class="sidebar-link" title="Download Word Documentation (.docx)">
+                    <i class="fa-solid fa-file-word w-4 text-center mr-2.5 text-xs text-blue-600"></i>
+                    <span class="sidebar-label">Project Docs (.docx)</span>
+                </a>
+
+                <a href="/download/pdf" download="EduPulse_AI_Project_Documentation.pdf" id="nav-download-pdf" class="sidebar-link" title="Download PDF Documentation (.pdf)">
+                    <i class="fa-solid fa-file-pdf w-4 text-center mr-2.5 text-xs text-rose-500"></i>
+                    <span class="sidebar-label">Project Docs (.pdf)</span>
                 </a>
 
                 <p class="sidebar-heading px-3 pt-3.5 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Governance</p>

@@ -653,6 +653,72 @@ def download_audit_report():
     )
 
 # ---------------------------------------------------------------------------
+# Project Documentation Download APIs (.docx, .pdf, .md)
+# ---------------------------------------------------------------------------
+@app.route('/api/docs/download', methods=['GET'])
+@app.route('/download/docs', methods=['GET'])
+@app.route('/download/documentation', methods=['GET'])
+def download_project_documentation():
+    """Serves the project documentation in docx, pdf, or markdown formats."""
+    fmt = request.args.get('format', 'docx').lower().strip()
+    downloads_dir = os.path.join(PROJECT_ROOT, "downloads")
+    os.makedirs(downloads_dir, exist_ok=True)
+    
+    docx_file = os.path.join(downloads_dir, "EduPulse_AI_Project_Documentation.docx")
+    pdf_file = os.path.join(downloads_dir, "EduPulse_AI_Project_Documentation.pdf")
+    md_file = os.path.join(PROJECT_ROOT, "PROJECT_DOCUMENTATION.md")
+
+    # If file doesn't exist, regenerate on-the-fly
+    if not os.path.exists(docx_file) or not os.path.exists(pdf_file):
+        try:
+            import generate_documentation_files
+            generate_documentation_files.generate_docx()
+            generate_documentation_files.generate_pdf()
+        except Exception as e:
+            app.logger.error(f"Error auto-generating docs: {e}")
+
+    if fmt == 'pdf':
+        if not os.path.exists(pdf_file):
+            return jsonify({"error": "PDF documentation file not found."}), 404
+        return send_file(
+            pdf_file,
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name='EduPulse_AI_Project_Documentation.pdf'
+        )
+    elif fmt in ['md', 'markdown', 'txt']:
+        if not os.path.exists(md_file):
+            return jsonify({"error": "Markdown documentation file not found."}), 404
+        return send_file(
+            md_file,
+            mimetype='text/markdown',
+            as_attachment=True,
+            download_name='EduPulse_AI_Project_Documentation.md'
+        )
+    else:  # Default to DOCX (.doc / .docx)
+        if not os.path.exists(docx_file):
+            return jsonify({"error": "Word documentation file not found."}), 404
+        return send_file(
+            docx_file,
+            mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            as_attachment=True,
+            download_name='EduPulse_AI_Project_Documentation.docx'
+        )
+
+@app.route('/download/docx', methods=['GET'])
+@app.route('/download/doc', methods=['GET'])
+def download_docx_direct():
+    return redirect(url_for('download_project_documentation', format='docx'))
+
+@app.route('/download/pdf', methods=['GET'])
+def download_pdf_direct():
+    return redirect(url_for('download_project_documentation', format='pdf'))
+
+@app.route('/download/md', methods=['GET'])
+def download_md_direct():
+    return redirect(url_for('download_project_documentation', format='md'))
+
+# ---------------------------------------------------------------------------
 # Audit Logs API
 # ---------------------------------------------------------------------------
 @app.route('/api/audit_logs', methods=['GET'])
