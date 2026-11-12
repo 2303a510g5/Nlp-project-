@@ -557,7 +557,12 @@ async function saveProfileChanges() {
 
         if (!res.ok) throw new Error(data.error || "Failed to update profile");
 
-        currentUser = data.user;
+        if (data.user) {
+            currentUser = data.user;
+        } else if (currentUser) {
+            currentUser.full_name = full_name;
+            currentUser.department = department;
+        }
         renderAuthUserUI();
         closeSettingsModal();
         showToast("success", "Profile Updated", "Your profile details have been saved.");

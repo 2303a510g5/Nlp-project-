@@ -269,7 +269,15 @@ def api_update_profile():
     session['department'] = department
     database.log_audit_event(session['username'], "PROFILE_UPDATED", "User updated profile", request.remote_addr)
 
-    return jsonify({"success": True, "message": msg})
+    user = {
+        "id": session['user_id'],
+        "username": session['username'],
+        "role": session.get('role', 'student'),
+        "full_name": full_name,
+        "department": department
+    }
+
+    return jsonify({"success": True, "message": msg, "user": user})
 
 # ---------------------------------------------------------------------------
 # NLP Evaluation & Benchmark API (PDF Section 3 Compliant)
