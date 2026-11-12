@@ -10,3 +10,4 @@ ENV/
 *.db
 .vscode/
 .idea/
+backup_*/

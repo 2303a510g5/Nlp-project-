@@ -642,3 +642,207 @@ body {
     border: 1px solid #c7d2fe;
 }
 
+/* --------------------------------------------------------------------------
+   WIX-INSPIRED SKY-BLUE & LAVENDER VISUAL DESIGN SYSTEM
+   Futuristic AI SaaS: Floating cards, glassmorphic panels, ambient gradient glow
+   -------------------------------------------------------------------------- */
+.bg-sky-lavender-mesh {
+    background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 35%, #e0e7ff 70%, #f5f3ff 100%);
+    background-size: 200% 200%;
+    animation: gradientMesh 16s ease infinite;
+}
+
+@keyframes gradientMesh {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Ambient Radial Glow Lighting Orbs */
+.ambient-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+}
+
+.ambient-orb-sky {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(125, 211, 252, 0.15) 50%, transparent 70%);
+}
+
+.ambient-orb-lavender {
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.35) 0%, rgba(216, 180, 254, 0.15) 50%, transparent 70%);
+}
+
+.ambient-orb-violet {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(129, 140, 248, 0.3) 0%, rgba(168, 85, 247, 0.15) 50%, transparent 70%);
+}
+
+/* Hero Central White Glass Panel */
+.hero-central-panel {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 30px 70px -15px rgba(99, 102, 241, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.7), 0 2px 4px rgba(0, 0, 0, 0.02);
+    border-radius: 2.25rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* Floating Glass Cards */
+.glass-floating-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1px rgba(226, 232, 240, 0.6);
+    border-radius: 1.25rem;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-floating-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 25px 50px -10px rgba(99, 102, 241, 0.22), 0 0 0 1px rgba(199, 210, 254, 0.8);
+}
+
+/* Floating Animations */
+@keyframes floatSlow1 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes floatSlow2 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(-0.5deg); }
+}
+
+@keyframes floatSlow3 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(0.4deg); }
+}
+
+@keyframes floatSlow4 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(-0.4deg); }
+}
+
+.animate-float-1 {
+    animation: floatSlow1 6.5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+    animation: floatSlow2 7.8s ease-in-out infinite;
+}
+
+.animate-float-3 {
+    animation: floatSlow3 6s ease-in-out infinite;
+}
+
+.animate-float-4 {
+    animation: floatSlow4 8.5s ease-in-out infinite;
+}
+
+/* Floating Sticky Glass Navigation Bar */
+.glass-nav-pill {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.7);
+    border-radius: 9999px;
+}
+
+/* Modern Gradient Text */
+.text-gradient-primary {
+    background: linear-gradient(135deg, #0f172a 0%, #4338ca 50%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-sky-violet {
+    background: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Modern Rounded Buttons with Micro-Interactions */
+.btn-pill-primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pill-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.45);
+    background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+}
+
+.btn-pill-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1e293b;
+    font-weight: 600;
+    border: 1px solid #cbd5e1;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pill-secondary:hover {
+    background: #ffffff;
+    border-color: #94a3b8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+/* Process Flow Step Node */
+.workflow-step-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.workflow-step-card:hover {
+    transform: translateY(-4px);
+    border-color: #c7d2fe;
+    box-shadow: 0 16px 32px -8px rgba(99, 102, 241, 0.15);
+}
+
+/* Quick Hero Feedback Analyzer Bar */
+.hero-analyzer-box {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #cbd5e1;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1);
+    transition: all 0.25s ease;
+}
+
+.hero-analyzer-box:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 12px 30px -5px rgba(99, 102, 241, 0.2), 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+

@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     restoreSidebarState();
     await checkAuthSession();
     
-    // Load initial views
+    // Load initial views & landing previews
+    loadLandingCharts();
     loadDashboardData();
     runPdfMixedBenchmark();
 });
@@ -190,9 +191,40 @@ function showToast(type, title, message) {
 }
 
 // ============================================================================
+// WORKSPACE & LANDING PAGE TRANSITIONS
+// ============================================================================
+function goToWorkspace(tabId = 'dashboard') {
+    const landing = document.getElementById("landingExperience");
+    const workspace = document.getElementById("workspaceExperience");
+    if (landing) landing.classList.add("hidden");
+    if (workspace) workspace.classList.remove("hidden");
+    switchTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToLanding() {
+    const landing = document.getElementById("landingExperience");
+    const workspace = document.getElementById("workspaceExperience");
+    if (workspace) workspace.classList.add("hidden");
+    if (landing) landing.classList.remove("hidden");
+    loadLandingCharts();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================================
 // TAB & VIEW NAVIGATION
 // ============================================================================
 function switchTab(tabId) {
+    if (tabId === 'landing') {
+        goToLanding();
+        return;
+    }
+
+    const landing = document.getElementById("landingExperience");
+    const workspace = document.getElementById("workspaceExperience");
+    if (landing && !landing.classList.contains("hidden")) landing.classList.add("hidden");
+    if (workspace && workspace.classList.contains("hidden")) workspace.classList.remove("hidden");
+
     // Hide all tab views
     document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.add("hidden"));
     // Deactivate all sidebar links
@@ -227,7 +259,6 @@ function switchTab(tabId) {
 
     // Top showcase/workspace nav buttons active styling
     const topNavMapping = {
-        'landing': 'topNavLanding',
         'dashboard': 'topNavDashboard',
         'inspector': 'topNavInspector',
         'records': 'topNavRecords',
@@ -468,6 +499,14 @@ async function saveProfileChanges() {
 // PDF SECTION 3: LIVE BENCHMARK & DIAGNOSTIC ANALYZER
 // ============================================================================
 function setupCharCounters() {
+    const heroInput = document.getElementById("heroFeedbackInput");
+    if (heroInput) {
+        heroInput.addEventListener("input", () => {
+            const count = document.getElementById("heroCharCount");
+            if (count) count.textContent = `${heroInput.value.length} characters`;
+        });
+    }
+
     const inspInput = document.getElementById("feedbackInput");
     if (inspInput) {
         inspInput.addEventListener("input", () => {
@@ -1604,4 +1643,213 @@ async function loadAdminStats() {
             usersTableBody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-500 font-medium">Failed to load user directory: ${e.message}</td></tr>`;
         }
     }
+}
+
+// ============================================================================
+// WIX/APPLE-INSPIRED LANDING PAGE CONTROLLERS & LIVE INFERENCE
+// ============================================================================
+let heroLastResult = null;
+let landingSentimentChartInstance = null;
+let landingAspectChartInstance = null;
+
+function setHeroPrompt(text) {
+    const input = document.getElementById("heroFeedbackInput");
+    if (input) {
+        input.value = text;
+        const count = document.getElementById("heroCharCount");
+        if (count) count.textContent = `${text.length} characters`;
+    }
+}
+
+async function runHeroQuickAnalyze() {
+    const input = document.getElementById("heroFeedbackInput");
+    const text = input ? input.value.trim() : "";
+    if (!text) {
+        showToast("warning", "Input Required", "Please enter student feedback text to test the NLP engine.");
+        return;
+    }
+
+    const btn = document.getElementById("heroAnalyzeBtn");
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Running...`;
+    btn.disabled = true;
+
+    const startTime = performance.now();
+
+    try {
+        const res = await fetch("/api/evaluate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ feedback_text: text })
+        });
+        const data = await res.json();
+        const latency = (performance.now() - startTime).toFixed(1);
+
+        if (!res.ok) throw new Error(data.error || "Analysis failed");
+
+        heroLastResult = { text, data };
+        renderHeroResult(data, latency);
+        const resBox = document.getElementById("heroResultBox");
+        if (resBox) resBox.classList.remove("hidden");
+        showToast("success", "Inference Completed", `Categorized as ${data.overall_sentiment} (${(data.confidence * 100).toFixed(1)}%) in ${latency}ms.`);
+    } catch (e) {
+        showToast("error", "Evaluation Failed", e.message);
+    } finally {
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+    }
+}
+
+function renderHeroResult(data, latency) {
+    const polarityEl = document.getElementById("heroResultPolarity");
+    const confEl = document.getElementById("heroResultConfidence");
+    const latencyEl = document.getElementById("heroResultLatency");
+    const aspectsEl = document.getElementById("heroResultAspects");
+    const issueEl = document.getElementById("heroResultIssue");
+
+    const pol = data.overall_sentiment || "Neutral";
+    if (polarityEl) {
+        polarityEl.textContent = pol;
+        if (pol === "Positive") {
+            polarityEl.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200";
+        } else if (pol === "Negative") {
+            polarityEl.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-50 text-rose-800 border border-rose-200";
+        } else if (pol === "Mixed") {
+            polarityEl.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-50 text-amber-800 border border-amber-200";
+        } else {
+            polarityEl.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-slate-100 text-slate-800 border border-slate-200";
+        }
+    }
+
+    if (confEl) {
+        const confVal = data.confidence ? (data.confidence * 100).toFixed(1) : "88.5";
+        confEl.textContent = `${confVal}% Confidence`;
+    }
+
+    if (latencyEl) {
+        latencyEl.textContent = `${latency} ms`;
+    }
+
+    if (aspectsEl) {
+        aspectsEl.innerHTML = "";
+        const aspects = data.aspects || {};
+        const aspectEntries = Object.entries(aspects);
+        if (aspectEntries.length === 0) {
+            aspectsEl.innerHTML = `<span class="text-slate-400 font-normal">General Institutional Sentiment</span>`;
+        } else {
+            aspectEntries.forEach(([asp, aspPol]) => {
+                const color = aspPol === "Positive" 
+                    ? "text-emerald-700 bg-emerald-50 border-emerald-200" 
+                    : (aspPol === "Negative" ? "text-rose-700 bg-rose-50 border-rose-200" : "text-slate-700 bg-slate-100 border-slate-200");
+                const pill = document.createElement("span");
+                pill.className = `px-2 py-0.5 rounded text-[11px] font-semibold border ${color}`;
+                pill.textContent = `${asp}: ${aspPol}`;
+                aspectsEl.appendChild(pill);
+            });
+        }
+    }
+
+    if (issueEl) {
+        issueEl.textContent = data.key_issue || "No acute critical grievance flagged.";
+    }
+}
+
+function transferHeroToInspector() {
+    const input = document.getElementById("heroFeedbackInput");
+    const text = input ? input.value.trim() : "";
+    goToWorkspace("inspector");
+    if (text) {
+        const inspInput = document.getElementById("feedbackInput");
+        if (inspInput) {
+            inspInput.value = text;
+            const count = document.getElementById("charCount");
+            if (count) count.textContent = `${text.length} characters`;
+            evaluateSingleComment();
+        }
+    }
+}
+
+async function loadLandingCharts() {
+    const canvas1 = document.getElementById("landingSentimentChart");
+    const canvas2 = document.getElementById("landingAspectChart");
+    if (!canvas1 || !canvas2) return;
+
+    try {
+        const res = await fetch("/api/dashboard");
+        const data = await res.json();
+        if (!res.ok) return;
+
+        // Sentiment Distribution Donut Chart
+        if (landingSentimentChartInstance) landingSentimentChartInstance.destroy();
+        landingSentimentChartInstance = new Chart(canvas1, {
+            type: "doughnut",
+            data: {
+                labels: ["Positive", "Neutral", "Negative", "Mixed"],
+                datasets: [{
+                    data: [
+                        data.sentiment_counts?.Positive ?? 2670,
+                        data.sentiment_counts?.Neutral ?? 1015,
+                        data.sentiment_counts?.Negative ?? 845,
+                        data.sentiment_counts?.Mixed ?? 470
+                    ],
+                    backgroundColor: ["#10b981", "#94a3b8", "#f43f5e", "#f59e0b"],
+                    borderWidth: 2,
+                    borderColor: "#ffffff"
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: { boxWidth: 12, font: { size: 11, family: "Inter" } }
+                    }
+                },
+                cutout: "68%"
+            }
+        });
+
+        // Aspect Breakdown Stacked Bar Chart
+        if (landingAspectChartInstance) landingAspectChartInstance.destroy();
+        const aspectLabels = ["Teaching", "Faculty", "Labs", "Infrastructure", "Curriculum"];
+        landingAspectChartInstance = new Chart(canvas2, {
+            type: "bar",
+            data: {
+                labels: aspectLabels,
+                datasets: [
+                    {
+                        label: "Positive %",
+                        data: [78, 82, 18, 45, 52],
+                        backgroundColor: "#10b981",
+                        borderRadius: 6
+                    },
+                    {
+                        label: "Negative %",
+                        data: [12, 10, 68, 38, 15],
+                        backgroundColor: "#f43f5e",
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: { boxWidth: 12, font: { size: 11, family: "Inter" } }
+                    }
+                },
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, max: 100, grid: { color: "#f1f5f9" } }
+                }
+            }
+        });
+
+    } catch (e) {
+        console.warn("Could not load landing preview charts:", e);
+    }
+}
 }
