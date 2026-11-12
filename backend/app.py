@@ -283,7 +283,16 @@ def evaluate_comment():
     payload = request.get_json(force=True, silent=True) or {}
     if not isinstance(payload, dict):
         payload = {}
-    feedback_text = payload.get('text') or request.form.get('text') or ''
+    feedback_text = (
+        payload.get('text') or
+        payload.get('feedback_text') or
+        payload.get('feedback') or
+        payload.get('comment') or
+        payload.get('input') or
+        request.form.get('text') or
+        request.form.get('feedback_text') or
+        ''
+    )
     feedback_text = str(feedback_text).strip()
 
     if not feedback_text:

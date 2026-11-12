@@ -156,6 +156,11 @@ function showToast(type, title, message) {
     const container = document.getElementById("toast-container");
     if (!container) return;
 
+    // Keep at most 2 toasts visible at once so screen isn't flooded
+    while (container.children.length >= 2) {
+        container.removeChild(container.firstChild);
+    }
+
     const toast = document.createElement("div");
     toast.className = "toast-item";
 
@@ -922,8 +927,10 @@ async function loadRecords(page = 1) {
 
         if (!res.ok) throw new Error(data.error || "Failed to load records");
 
-        totalRecordsCount = data.total;
-        document.getElementById("recordsTotalBadge").textContent = `${data.total.toLocaleString()} Records`;
+        const total = (data.total !== undefined ? data.total : data.total_records) || 0;
+        totalRecordsCount = total;
+        const totalBadge = document.getElementById("recordsTotalBadge");
+        if (totalBadge) totalBadge.textContent = `${total.toLocaleString()} Records`;
         renderRecordsTable(data);
     } catch (e) {
         tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-rose-500">Error loading records: ${e.message}</td></tr>`;
@@ -933,6 +940,8 @@ async function loadRecords(page = 1) {
 function renderRecordsTable(data) {
     const tbody = document.getElementById("recordsTableBody");
     tbody.innerHTML = "";
+
+    const total = (data.total !== undefined ? data.total : data.total_records) || 0;
 
     if (!data.records || data.records.length === 0) {
         tbody.innerHTML = `
@@ -946,24 +955,32 @@ function renderRecordsTable(data) {
                 </td>
             </tr>
         `;
-        document.getElementById("recPaginationInfo").textContent = "Showing 0 of 0 records";
-        document.getElementById("recPaginationButtons").innerHTML = "";
+        const pagInfo = document.getElementById("recPaginationInfo");
+        if (pagInfo) pagInfo.textContent = "Showing 0 of 0 records";
+        const btnContainer = document.getElementById("recPaginationButtons");
+        if (btnContainer) btnContainer.innerHTML = "";
         return;
     }
 
     data.records.forEach(rec => {
         const tr = document.createElement("tr");
 
+        const sentiment = rec.overall_sentiment || rec.sentiment || "Neutral";
+        const urgency = rec.urgency_level || rec.urgency || "Low";
+        const aspect = rec.primary_aspect || rec.aspect || "General";
+        const course = rec.course_name || rec.course || "General";
+        const student = rec.student_name || "Anonymous";
+
         // Sentiment badge
         let sentClass = "badge-neutral";
-        if (rec.sentiment === "Positive") sentClass = "badge-positive";
-        else if (rec.sentiment === "Negative") sentClass = "badge-negative";
-        else if (rec.sentiment === "Mixed") sentClass = "badge-mixed";
+        if (sentiment === "Positive") sentClass = "badge-positive";
+        else if (sentiment === "Negative") sentClass = "badge-negative";
+        else if (sentiment === "Mixed") sentClass = "badge-mixed";
 
         // Urgency badge
         let urgClass = "urgency-low";
-        if (rec.urgency === "High") urgClass = "urgency-high";
-        else if (rec.urgency === "Medium") urgClass = "urgency-medium";
+        if (urgency === "High") urgClass = "urgency-high";
+        else if (urgency === "Medium") urgClass = "urgency-medium";
 
         // Status badge
         let statusClass = "badge-status-new";
@@ -976,26 +993,26 @@ function renderRecordsTable(data) {
             <td class="font-medium text-slate-900 truncate max-w-[140px]" title="${rec.department}">${rec.department}</td>
             <td class="max-w-xs text-slate-700">
                 <p class="truncate" title="${rec.feedback_text}">${rec.feedback_text}</p>
-                <span class="text-[10px] text-slate-400 font-mono">${rec.student_name} &bull; ${rec.course || "General"}</span>
+                <span class="text-[10px] text-slate-400 font-mono">${student} &bull; ${course}</span>
             </td>
             <td>
-                <span class="badge-pill ${sentClass}">${rec.sentiment}</span>
+                <span class="badge-pill ${sentClass}">${sentiment}</span>
             </td>
-            <td class="text-slate-600 font-medium truncate max-w-[100px]">${rec.aspect || "General"}</td>
+            <td class="text-slate-600 font-medium truncate max-w-[100px]">${aspect}</td>
             <td>
-                <span class="badge-pill ${urgClass}">${rec.urgency || "Low"}</span>
+                <span class="badge-pill ${urgClass}">${urgency}</span>
             </td>
             <td>
                 <span class="badge-pill ${statusClass}">${rec.status || "New"}</span>
             </td>
             <td class="text-right space-x-1 shrink-0">
-                <button onclick="viewRecordDetail(${rec.id})" title="View Details" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-indigo-50 rounded-lg transition">
+                <button onclick="viewRecordDetail(${rec.id})" title="View Details" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition cursor-pointer">
                     <i class="fa-solid fa-eye"></i>
                 </button>
-                <button onclick="openStatusUpdateModal(${rec.id}, '${rec.status}', '${rec.assigned_to || ""}', '${(rec.review_notes || "").replace(/'/g, "\\'")}')" title="Update Status" class="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition">
+                <button onclick="openStatusUpdateModal(${rec.id}, '${rec.status}', '${rec.assigned_to || ""}', '${(rec.review_notes || "").replace(/'/g, "\\'")}')" title="Update Status" class="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition cursor-pointer">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button onclick="openDeleteModal(${rec.id})" title="Delete Record" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                <button onclick="openDeleteModal(${rec.id})" title="Delete Record" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
             </td>
@@ -1004,9 +1021,10 @@ function renderRecordsTable(data) {
     });
 
     // Pagination info & buttons
-    const start = (data.page - 1) * data.per_page + 1;
-    const end = Math.min(data.page * data.per_page, data.total);
-    document.getElementById("recPaginationInfo").textContent = `Showing ${start} to ${end} of ${data.total} records`;
+    const start = total === 0 ? 0 : (data.page - 1) * data.per_page + 1;
+    const end = Math.min(data.page * data.per_page, total);
+    const pagInfo = document.getElementById("recPaginationInfo");
+    if (pagInfo) pagInfo.textContent = `Showing ${start} to ${end} of ${total} records`;
 
     const btnContainer = document.getElementById("recPaginationButtons");
     btnContainer.innerHTML = "";
@@ -1775,7 +1793,7 @@ async function runHeroQuickAnalyze() {
         const res = await fetch("/api/evaluate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ feedback_text: text })
+            body: JSON.stringify({ text: text, feedback_text: text })
         });
         const data = await res.json();
         const latency = (performance.now() - startTime).toFixed(1);

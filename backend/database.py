@@ -389,6 +389,7 @@ def get_feedback_records(search_query=None, sentiment_filter=None, department_fi
 
     return {
         "records": records,
+        "total": total_records,
         "total_records": total_records,
         "page": page,
         "per_page": per_page,
