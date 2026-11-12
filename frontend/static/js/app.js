@@ -159,7 +159,7 @@ function showToast(type, title, message) {
     const toast = document.createElement("div");
     toast.className = "toast-item";
 
-    let iconHtml = '<i class="fa-solid fa-circle-info text-indigo-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
+    let iconHtml = '<i class="fa-solid fa-circle-info text-emerald-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
     if (type === "success") {
         iconHtml = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 mr-3 shrink-0"></i>';
     } else if (type === "error") {
@@ -268,9 +268,9 @@ function switchTab(tabId) {
         const btn = document.getElementById(btnId);
         if (btn) {
             if (tab === tabId) {
-                btn.className = "px-3 py-1.5 rounded-lg text-indigo-600 bg-indigo-50 font-bold transition";
+                btn.className = "px-3 py-1.5 rounded-lg text-emerald-600 bg-indigo-50 font-bold transition";
             } else {
-                btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition";
+                btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition";
             }
         }
     });
@@ -358,13 +358,13 @@ function setAuthTab(tab) {
     if (tab === "login") {
         loginForm.classList.remove("hidden");
         regForm.classList.add("hidden");
-        tabLogin.className = "flex-1 py-2 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
+        tabLogin.className = "flex-1 py-2 text-xs font-bold text-emerald-600 border-b-2 border-indigo-600 transition";
         tabReg.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
         document.getElementById("authModalTitle").textContent = "Sign In to EduPulse™ AI";
     } else {
         loginForm.classList.add("hidden");
         regForm.classList.remove("hidden");
-        tabReg.className = "flex-1 py-2 text-xs font-bold text-indigo-600 border-b-2 border-indigo-600 transition";
+        tabReg.className = "flex-1 py-2 text-xs font-bold text-emerald-600 border-b-2 border-indigo-600 transition";
         tabLogin.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
         document.getElementById("authModalTitle").textContent = "Create an Account";
     }
@@ -923,7 +923,7 @@ function renderRecordsTable(data) {
                 <span class="badge-pill ${statusClass}">${rec.status || "New"}</span>
             </td>
             <td class="text-right space-x-1 shrink-0">
-                <button onclick="viewRecordDetail(${rec.id})" title="View Details" class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
+                <button onclick="viewRecordDetail(${rec.id})" title="View Details" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-indigo-50 rounded-lg transition">
                     <i class="fa-solid fa-eye"></i>
                 </button>
                 <button onclick="openStatusUpdateModal(${rec.id}, '${rec.status}', '${rec.assigned_to || ""}', '${(rec.review_notes || "").replace(/'/g, "\\'")}')" title="Update Status" class="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition">
@@ -955,7 +955,7 @@ function renderRecordsTable(data) {
 
     // Current page badge
     const curBadge = document.createElement("span");
-    curBadge.className = "px-3 py-1.5 text-xs font-bold bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 font-mono";
+    curBadge.className = "px-3 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg border border-indigo-100 font-mono";
     curBadge.textContent = `${data.page} / ${data.pages || 1}`;
     btnContainer.appendChild(curBadge);
 
@@ -1035,7 +1035,7 @@ async function viewRecordDetail(recordId) {
                 </div>
                 <div class="p-3 bg-white border border-slate-200 rounded-xl">
                     <span class="text-slate-400 block text-[10px] uppercase font-bold">Status</span>
-                    <span class="text-sm font-extrabold text-indigo-600">${rec.status || "New"}</span>
+                    <span class="text-sm font-extrabold text-emerald-600">${rec.status || "New"}</span>
                 </div>
             </div>
 
@@ -1273,7 +1273,7 @@ function renderDashIssuesChart(data) {
             datasets: [{
                 label: 'Complaints Reported',
                 data: values,
-                backgroundColor: '#4f46e5',
+                backgroundColor: '#10B981',
                 borderRadius: 4
             }]
         },
@@ -1350,7 +1350,7 @@ function renderDashRecentRows(records) {
             <td class="text-slate-600 font-medium">${rec.aspect || "General"}</td>
             <td><span class="badge-pill badge-neutral font-medium">${rec.status || "New"}</span></td>
             <td class="text-right">
-                <button onclick="viewRecordDetail(${rec.id})" class="text-indigo-600 hover:text-indigo-800 font-semibold text-xs transition">View &rarr;</button>
+                <button onclick="viewRecordDetail(${rec.id})" class="text-emerald-600 hover:text-indigo-800 font-semibold text-xs transition">View &rarr;</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -1430,7 +1430,7 @@ function renderCollectionCharts(data) {
                 datasets: [{
                     label: 'Complaints Reported',
                     data: values,
-                    backgroundColor: '#4f46e5',
+                    backgroundColor: '#10B981',
                     borderRadius: 4
                 }]
             },
@@ -1622,7 +1622,7 @@ async function loadAdminStats() {
             users.forEach(u => {
                 const tr = document.createElement("tr");
                 const roleBadgeClass = u.role === "admin" 
-                    ? "bg-indigo-50 text-indigo-700 border border-indigo-200" 
+                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-200" 
                     : "bg-slate-100 text-slate-700 border border-slate-200";
                 
                 tr.innerHTML = `
@@ -1792,7 +1792,7 @@ async function loadLandingCharts() {
                         data.sentiment_counts?.Negative ?? 845,
                         data.sentiment_counts?.Mixed ?? 470
                     ],
-                    backgroundColor: ["#10b981", "#94a3b8", "#f43f5e", "#f59e0b"],
+                    backgroundColor: ["#10B981", "#64748B", "#EF4444", "#F59E0B"],
                     borderWidth: 2,
                     borderColor: "#ffffff"
                 }]
@@ -1851,5 +1851,4 @@ async function loadLandingCharts() {
     } catch (e) {
         console.warn("Could not load landing preview charts:", e);
     }
-}
-}
+}}
