@@ -133,12 +133,24 @@ def home():
 @app.route('/api/auth/register', methods=['POST'])
 def api_register():
     data = request.get_json(force=True, silent=True) or {}
-    username = str(data.get('username', '')).strip()
+    raw_username = str(data.get('username', '')).strip()
     email = str(data.get('email', '')).strip().lower()
     password = str(data.get('password', '')).strip()
     full_name = str(data.get('full_name', '')).strip()
     role = str(data.get('role', 'student')).strip().lower()
     department = str(data.get('department', 'CSE')).strip()
+
+    # Intelligent fallback: If user entered an email address into username field
+    if not email and '@' in raw_username and '.' in raw_username:
+        email = raw_username.lower()
+
+    # If email is still empty, auto-generate a valid email handle
+    if not email:
+        clean_name = raw_username.lower().replace(' ', '')
+        email = f"{clean_name}@edupulse.ai" if clean_name else "user@edupulse.ai"
+
+    # Username can be the entered handle, or handle prefix of email
+    username = raw_username if raw_username else email.split('@')[0]
 
     if not username or len(username) < 3:
         return jsonify({"error": "Username must be at least 3 characters long."}), 400
@@ -147,7 +159,7 @@ def api_register():
     if not password or len(password) < 6:
         return jsonify({"error": "Password must be at least 6 characters long."}), 400
     if not full_name:
-        full_name = username.capitalize()
+        full_name = username.split('@')[0].capitalize()
 
     if role not in ['student', 'faculty', 'admin']:
         role = 'student'

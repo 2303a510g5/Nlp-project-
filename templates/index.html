@@ -2198,10 +2198,10 @@
             <!-- Login Form -->
             <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="p-6 space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username</label>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username or Email</label>
                     <input type="text" id="loginUsername" required autocomplete="username"
                         class="form-input-control text-xs"
-                        placeholder="e.g. admin or faculty">
+                        placeholder="e.g. admin or yourname@sru.edu.in">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password</label>
@@ -2249,16 +2249,22 @@
             <!-- Register Form -->
             <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="hidden p-6 space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username / User ID <span class="text-rose-500">*</span></label>
                     <input type="text" id="regUsername" required autocomplete="username"
                         class="form-input-control text-xs"
-                        placeholder="Choose unique handle">
+                        placeholder="e.g. saivarshith or 2303a51831">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email Address <span class="text-rose-500">*</span></label>
+                    <input type="email" id="regEmail" required autocomplete="email"
+                        class="form-input-control text-xs"
+                        placeholder="e.g. yourname@sru.edu.in or yourname@gmail.com">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
                     <input type="text" id="regFullName"
                         class="form-input-control text-xs"
-                        placeholder="e.g. Prof. Anitha Rao">
+                        placeholder="e.g. Sai Varshith">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>

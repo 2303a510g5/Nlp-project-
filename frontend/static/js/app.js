@@ -471,6 +471,11 @@ async function handleRegisterSubmit(event) {
     btn.disabled = true;
 
     const username = document.getElementById("regUsername").value.trim();
+    const emailEl = document.getElementById("regEmail");
+    let email = emailEl ? emailEl.value.trim() : "";
+    if (!email && username.includes("@") && username.includes(".")) {
+        email = username;
+    }
     const password = document.getElementById("regPassword").value;
     const full_name = document.getElementById("regFullName").value.trim();
     const role = document.getElementById("regRole").value;
@@ -480,7 +485,7 @@ async function handleRegisterSubmit(event) {
         const res = await fetch("/api/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password, full_name, role, department })
+            body: JSON.stringify({ username, email, password, full_name, role, department })
         });
         const data = await res.json();
 
