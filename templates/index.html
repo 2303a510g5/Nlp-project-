@@ -64,23 +64,14 @@
                     <a href="#benchmarks" class="hover:text-[#10B981] transition">Benchmarks</a>
                 </div>
 
-                <!-- Right: Action Buttons (Sign In, Sign Up & Explore) -->
-                <div class="flex items-center space-x-2 sm:space-x-2.5">
+                <!-- Right: Action Buttons (Sign In & Explore) -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
                     
                     <!-- Unauthenticated Controls (Landing Navbar) -->
-                    <div id="landingUnauthControls" class="flex items-center space-x-2">
-                        <!-- Distinct Sign In Pill Button -->
+                    <div id="landingUnauthControls" class="flex items-center">
                         <button onclick="openAuthModal('login')" 
-                            class="px-3.5 py-1.5 text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-emerald-500/40 hover:border-emerald-400 rounded-full transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
-                            <i class="fa-solid fa-arrow-right-to-bracket text-[11px] text-[#34D399]"></i>
-                            <span>Sign In</span>
-                        </button>
-
-                        <!-- High-Contrast Sign Up Button -->
-                        <button onclick="openAuthModal('register')" 
-                            class="px-3.5 py-1.5 text-xs font-bold text-[#071B17] bg-[#34D399] hover:bg-[#10B981] hover:text-white rounded-full transition shadow-sm flex items-center space-x-1.5 cursor-pointer">
-                            <i class="fa-solid fa-user-plus text-[11px]"></i>
-                            <span>Sign Up</span>
+                            class="px-3 py-1.5 text-xs sm:text-sm font-bold text-white hover:text-[#34D399] transition cursor-pointer">
+                            Sign In
                         </button>
                     </div>
 

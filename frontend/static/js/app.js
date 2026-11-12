@@ -380,15 +380,15 @@ function setAuthTab(tab) {
     if (tab === "login") {
         if (loginForm) loginForm.classList.remove("hidden");
         if (regForm) regForm.classList.add("hidden");
-        if (tabLogin) tabLogin.className = "flex-1 py-2 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition";
-        if (tabReg) tabReg.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        if (tabLogin) tabLogin.className = "flex-1 py-2.5 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition cursor-pointer flex items-center justify-center space-x-1.5";
+        if (tabReg) tabReg.className = "flex-1 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition cursor-pointer flex items-center justify-center space-x-1.5";
         const title = document.getElementById("authModalTitle");
         if (title) title.textContent = "Sign In to EduPulse™ AI";
     } else {
         if (loginForm) loginForm.classList.add("hidden");
         if (regForm) regForm.classList.remove("hidden");
-        if (tabReg) tabReg.className = "flex-1 py-2 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition";
-        if (tabLogin) tabLogin.className = "flex-1 py-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition";
+        if (tabReg) tabReg.className = "flex-1 py-2.5 text-xs font-bold text-[#10B981] border-b-2 border-[#10B981] transition cursor-pointer flex items-center justify-center space-x-1.5";
+        if (tabLogin) tabLogin.className = "flex-1 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition cursor-pointer flex items-center justify-center space-x-1.5";
         const title = document.getElementById("authModalTitle");
         if (title) title.textContent = "Create an Account / Sign Up";
     }
@@ -437,8 +437,9 @@ async function handleLoginSubmit(event) {
         closeAuthModal();
         showToast("success", "Welcome Back", `Signed in as ${currentUser.full_name || currentUser.username}`);
         loadDashboardData();
+        goToWorkspace('dashboard');
     } catch (e) {
-        showToast("error", "Sign In Failed", e.message);
+        showToast("error", "Sign In Failed", e.message || "Failed to sign in. Please check credentials.");
     } finally {
         btn.innerHTML = origText;
         btn.disabled = false;
@@ -473,6 +474,7 @@ async function handleRegisterSubmit(event) {
         closeAuthModal();
         showToast("success", "Account Created", `Welcome to EduPulse™ AI, ${username}!`);
         loadDashboardData();
+        goToWorkspace('dashboard');
     } catch (e) {
         showToast("error", "Registration Error", e.message);
     } finally {
@@ -1894,3 +1896,24 @@ async function loadLandingCharts() {
         console.warn("Could not load landing preview charts:", e);
     }
 }
+
+// Global Window Bindings & Event Listeners
+window.openAuthModal = openAuthModal;
+window.closeAuthModal = closeAuthModal;
+window.setAuthTab = setAuthTab;
+window.quickFillLogin = quickFillLogin;
+window.handleLoginSubmit = handleLoginSubmit;
+window.handleRegisterSubmit = handleRegisterSubmit;
+window.logoutUser = logoutUser;
+window.goToWorkspace = goToWorkspace;
+window.goToLanding = goToLanding;
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+        closeAuthModal();
+        if (typeof closeSettingsModal === 'function') closeSettingsModal();
+        if (typeof closeDetailModal === 'function') closeDetailModal();
+        if (typeof closeStatusModal === 'function') closeStatusModal();
+        if (typeof closeDeleteModal === 'function') closeDeleteModal();
+    }
+});
