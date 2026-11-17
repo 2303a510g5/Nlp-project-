@@ -20,11 +20,21 @@ from sklearn.linear_model import LogisticRegression
 # Lexicon and Resource Configuration
 # ---------------------------------------------------------------------------
 def _init_nltk_resources():
-    for resource in ['punkt', 'stopwords', 'wordnet', 'omw-1.4', 'punkt_tab']:
+    resource_map = {
+        'tokenizers/punkt': 'punkt',
+        'corpora/stopwords': 'stopwords',
+        'corpora/wordnet': 'wordnet',
+        'corpora/omw-1.4': 'omw-1.4',
+        'tokenizers/punkt_tab': 'punkt_tab'
+    }
+    for res_path, pkg in resource_map.items():
         try:
-            nltk.download(resource, quiet=True)
-        except Exception:
-            pass
+            nltk.data.find(res_path)
+        except (LookupError, Exception):
+            try:
+                nltk.download(pkg, quiet=True)
+            except Exception:
+                pass
 
 _init_nltk_resources()
 

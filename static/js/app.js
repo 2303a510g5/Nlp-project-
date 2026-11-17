@@ -236,10 +236,13 @@ function _handleGithubPagesApi(url, init = {}) {
         const stored = localStorage.getItem("edupulse_user");
         if (stored) {
             try {
-                return _buildClientJsonResponse({ logged_in: true, user: JSON.parse(stored) });
+                const u = JSON.parse(stored);
+                if (u && u.username) {
+                    return _buildClientJsonResponse({ authenticated: true, logged_in: true, user: u });
+                }
             } catch (e) {}
         }
-        return _buildClientJsonResponse({ logged_in: false, user: null });
+        return _buildClientJsonResponse({ authenticated: false, logged_in: false, user: null });
     }
 
     if (cleanUrl.endsWith("/api/auth/login") || cleanUrl.endsWith("/api/auth/register")) {
@@ -253,17 +256,23 @@ function _handleGithubPagesApi(url, init = {}) {
             department: body.department || "CSE"
         };
         localStorage.setItem("edupulse_user", JSON.stringify(user));
-        return _buildClientJsonResponse({ success: true, message: "Authentication successful", user: user });
+        return _buildClientJsonResponse({ success: true, authenticated: true, message: "Authentication successful", user: user });
     }
 
     if (cleanUrl.endsWith("/api/auth/logout")) {
         localStorage.removeItem("edupulse_user");
-        return _buildClientJsonResponse({ success: true, message: "Logged out successfully" });
+        return _buildClientJsonResponse({ success: true, authenticated: false, message: "Logged out successfully" });
     }
 
     if (cleanUrl.endsWith("/api/auth/profile")) {
         const stored = localStorage.getItem("edupulse_user");
-        let u = stored ? JSON.parse(stored) : { id: 1, username: "student", role: "Student" };
+        let u = null;
+        if (stored) {
+            try { u = JSON.parse(stored); } catch (e) {}
+        }
+        if (!u || !u.username) {
+            u = { id: 1, username: "student", role: "Student", full_name: "Sharanya Kora", department: "CSE" };
+        }
         if (body.full_name) u.full_name = body.full_name;
         if (body.department) u.department = body.department;
         localStorage.setItem("edupulse_user", JSON.stringify(u));
@@ -526,6 +535,19 @@ function switchTab(tabId) {
         return;
     }
 
+    if (tabId === 'admin') {
+        if (!currentUser) {
+            showToast("warning", "Authentication Required", "Please sign in to access the Administrator Panel.");
+            openAuthModal("login");
+            return;
+        }
+        const role = (currentUser.role || "").toLowerCase();
+        if (role !== "admin" && role !== "administrator") {
+            showToast("error", "Access Restricted", "The Administrator Panel requires administrative privileges.");
+            return;
+        }
+    }
+
     const landing = document.getElementById("landingExperience");
     const workspace = document.getElementById("workspaceExperience");
     if (landing && !landing.classList.contains("hidden")) landing.classList.add("hidden");
@@ -591,7 +613,7 @@ function switchTab(tabId) {
         const btn = document.getElementById(btnId);
         if (btn) {
             if (tab === tabId) {
-                btn.className = "px-3 py-1.5 rounded-lg text-emerald-600 bg-indigo-50 font-bold transition";
+                btn.className = "px-3 py-1.5 rounded-lg text-white bg-[#10B981] font-bold transition shadow-xs";
             } else {
                 btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition";
             }
@@ -625,20 +647,52 @@ async function checkAuthSession() {
         const res = await fetch("/api/auth/me");
         const data = await res.json();
 
-        if (data.authenticated && data.user) {
+        if ((data.authenticated || data.logged_in) && data.user) {
             currentUser = data.user;
+            localStorage.setItem("edupulse_user", JSON.stringify(currentUser));
             renderAuthUserUI();
         } else {
+            const stored = localStorage.getItem("edupulse_user");
+            if (stored) {
+                try {
+                    const u = JSON.parse(stored);
+                    if (u && u.username) {
+                        currentUser = u;
+                        renderAuthUserUI();
+                        return;
+                    }
+                } catch (err) {}
+            }
             currentUser = null;
             renderUnauthUI();
         }
     } catch (e) {
+        const stored = localStorage.getItem("edupulse_user");
+        if (stored) {
+            try {
+                const u = JSON.parse(stored);
+                if (u && u.username) {
+                    currentUser = u;
+                    renderAuthUserUI();
+                    return;
+                }
+            } catch (err) {}
+        }
         currentUser = null;
         renderUnauthUI();
     }
 }
 
 function renderAuthUserUI() {
+    if (!currentUser) {
+        renderUnauthUI();
+        return;
+    }
+
+    const uname = currentUser.username || "student";
+    const fname = currentUser.full_name || uname;
+    const initial = (uname || "U").charAt(0).toUpperCase();
+
     // Workspace header controls
     const unauth = document.getElementById("unauthControls");
     if (unauth) unauth.classList.add("hidden");
@@ -651,24 +705,35 @@ function renderAuthUserUI() {
     const landAuth = document.getElementById("landingAuthControls");
     if (landAuth) landAuth.classList.remove("hidden");
 
-    const initial = (currentUser.username || "U").charAt(0).toUpperCase();
     const avatarBadge = document.getElementById("userAvatarBadge");
     if (avatarBadge) avatarBadge.textContent = initial;
     const nameLabel = document.getElementById("userNameLabel");
-    if (nameLabel) nameLabel.textContent = currentUser.full_name || currentUser.username;
+    if (nameLabel) nameLabel.textContent = fname;
 
     const landAvatar = document.getElementById("landingUserAvatar");
     if (landAvatar) landAvatar.textContent = initial;
     const landName = document.getElementById("landingUserName");
-    if (landName) landName.textContent = currentUser.full_name || currentUser.username;
+    if (landName) landName.textContent = fname;
     
     const roleBadge = document.getElementById("userRoleBadge");
     if (roleBadge) roleBadge.textContent = currentUser.role || "student";
 
     const menuFullName = document.getElementById("menuFullName");
-    if (menuFullName) menuFullName.textContent = currentUser.full_name || currentUser.username;
+    if (menuFullName) menuFullName.textContent = fname;
     const menuUsername = document.getElementById("menuUsername");
-    if (menuUsername) menuUsername.textContent = `@${currentUser.username}`;
+    if (menuUsername) menuUsername.textContent = `@${uname}`;
+
+    // Update Dashboard Profile Card
+    const dashProfName = document.getElementById("dashProfileName");
+    if (dashProfName) dashProfName.textContent = fname;
+    const dashProfUname = document.getElementById("dashProfileUsername");
+    if (dashProfUname) dashProfUname.textContent = `@${uname}`;
+    const dashProfRole = document.getElementById("dashProfileRole");
+    if (dashProfRole) dashProfRole.textContent = currentUser.role || "Student";
+    const dashProfDept = document.getElementById("dashProfileDept");
+    if (dashProfDept) dashProfDept.textContent = currentUser.department || "CSE";
+    const dashProfAvatar = document.getElementById("dashProfileAvatar");
+    if (dashProfAvatar) dashProfAvatar.textContent = initial;
 }
 
 function renderUnauthUI() {
@@ -845,8 +910,15 @@ function closeSettingsModal() {
 }
 
 async function saveProfileChanges() {
-    const full_name = document.getElementById("setEditName").value.trim();
-    const department = document.getElementById("setEditDept").value.trim();
+    const nameInput = document.getElementById("setEditName");
+    const deptInput = document.getElementById("setEditDept");
+    const full_name = (nameInput ? nameInput.value : "").trim();
+    const department = (deptInput ? deptInput.value : "").trim();
+
+    if (!full_name) {
+        showToast("warning", "Validation Error", "Full name cannot be empty.");
+        return;
+    }
 
     try {
         const res = await fetch("/api/auth/profile", {
@@ -858,17 +930,26 @@ async function saveProfileChanges() {
 
         if (!res.ok) throw new Error(data.error || "Failed to update profile");
 
-        if (data.user) {
+        if (data.user && data.user.username) {
             currentUser = data.user;
-        } else if (currentUser) {
+        } else if (currentUser && currentUser.username) {
             currentUser.full_name = full_name;
             currentUser.department = department;
+        } else {
+            currentUser = {
+                id: 1,
+                username: "student",
+                role: "Student",
+                full_name: full_name || "Sharanya Kora",
+                department: department || "CSE"
+            };
         }
+        localStorage.setItem("edupulse_user", JSON.stringify(currentUser));
         renderAuthUserUI();
         closeSettingsModal();
         showToast("success", "Profile Updated", "Your profile details have been saved.");
     } catch (e) {
-        showToast("error", "Profile Update Error", e.message);
+        showToast("error", "Profile Update Error", e.message || "Failed to update profile.");
     }
 }
 
@@ -1345,7 +1426,7 @@ function renderRecordsTable(data) {
 
     // Current page badge
     const curBadge = document.createElement("span");
-    curBadge.className = "px-3 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg border border-indigo-100 font-mono";
+    curBadge.className = "px-3 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg font-mono";
     curBadge.textContent = `${data.page} / ${data.pages || 1}`;
     btnContainer.appendChild(curBadge);
 
@@ -1413,7 +1494,7 @@ async function viewRecordDetail(recordId) {
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div class="p-3 bg-white border border-slate-200 rounded-xl">
                     <span class="text-slate-400 block text-[10px] uppercase font-bold">Overall Sentiment</span>
-                    <span class="text-sm font-extrabold text-indigo-700">${rec.sentiment}</span>
+                    <span class="text-sm font-extrabold text-emerald-700">${rec.sentiment}</span>
                 </div>
                 <div class="p-3 bg-white border border-slate-200 rounded-xl">
                     <span class="text-slate-400 block text-[10px] uppercase font-bold">Confidence</span>
@@ -1769,7 +1850,7 @@ function renderDashRecentRows(records) {
             <td class="text-slate-600 font-medium">${rec.aspect || "General"}</td>
             <td><span class="badge-pill badge-neutral font-medium">${rec.status || "New"}</span></td>
             <td class="text-right">
-                <button onclick="viewRecordDetail(${rec.id})" class="text-emerald-600 hover:text-indigo-800 font-semibold text-xs transition">View &rarr;</button>
+                <button onclick="viewRecordDetail(${rec.id})" class="text-emerald-600 hover:text-emerald-800 font-semibold text-xs transition">View &rarr;</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -2041,7 +2122,7 @@ async function loadAdminStats() {
             users.forEach(u => {
                 const tr = document.createElement("tr");
                 const roleBadgeClass = u.role === "admin" 
-                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-200" 
+                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200" 
                     : "bg-slate-100 text-slate-700 border border-slate-200";
                 
                 tr.innerHTML = `
@@ -2292,3 +2373,116 @@ document.addEventListener("keydown", function(e) {
         if (typeof closeDeleteModal === 'function') closeDeleteModal();
     }
 });
+
+// ============================================================================
+// PASSWORD VISIBILITY & STRENGTH HELPERS
+// ============================================================================
+function togglePasswordVisibility(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (!input || !icon) return;
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+function handleRegPasswordInput(password) {
+    const bar = document.getElementById("regPassStrengthBar");
+    const label = document.getElementById("regPassStrengthLabel");
+    if (!bar || !label) return;
+
+    if (!password) {
+        bar.style.width = "0%";
+        bar.className = "h-1 bg-slate-300 transition-all duration-300";
+        label.textContent = "Strength: Enter password";
+        label.className = "text-[10px] text-slate-400 font-medium";
+        return;
+    }
+
+    let score = 0;
+    if (password.length >= 6) score++;
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 2) {
+        bar.style.width = "30%";
+        bar.className = "h-1 bg-rose-500 transition-all duration-300";
+        label.textContent = "Strength: Weak (Add numbers or capital letters)";
+        label.className = "text-[10px] text-rose-600 font-medium";
+    } else if (score <= 3) {
+        bar.style.width = "65%";
+        bar.className = "h-1 bg-amber-500 transition-all duration-300";
+        label.textContent = "Strength: Good (Acceptable)";
+        label.className = "text-[10px] text-amber-600 font-medium";
+    } else {
+        bar.style.width = "100%";
+        bar.className = "h-1 bg-[#10B981] transition-all duration-300";
+        label.textContent = "Strength: Strong (Excellent)";
+        label.className = "text-[10px] text-emerald-700 font-bold";
+    }
+}
+
+// ============================================================================
+// DASHBOARD QUICK INFERENCE ENGINE
+// ============================================================================
+async function runDashboardQuickInference() {
+    const inputEl = document.getElementById("dashQuickInput");
+    const resultBox = document.getElementById("dashQuickResult");
+    const btn = document.getElementById("dashQuickBtn");
+    if (!inputEl || !resultBox || !btn) return;
+
+    const text = inputEl.value.trim();
+    if (!text) {
+        showToast("warning", "Input Required", "Please enter or paste feedback text to analyze.");
+        return;
+    }
+
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Analyzing...`;
+    btn.disabled = true;
+
+    try {
+        const res = await fetch("/api/evaluate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: text })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Analysis failed");
+
+        resultBox.classList.remove("hidden");
+        const sentimentPill = document.getElementById("dashQuickSentiment");
+        const aspectTag = document.getElementById("dashQuickAspect");
+        const confMeter = document.getElementById("dashQuickConfidence");
+        const urgencyTag = document.getElementById("dashQuickUrgency");
+        const leadTarget = document.getElementById("dashQuickLead");
+
+        const sentiment = data.overall_sentiment || "Neutral";
+        let sentClass = "badge-status-neutral";
+        if (sentiment === "Positive") sentClass = "badge-status-resolved";
+        else if (sentiment === "Negative") sentClass = "badge-urgency-critical";
+        else if (sentiment === "Mixed") sentClass = "badge-urgency-high";
+
+        if (sentimentPill) {
+            sentimentPill.className = `badge-pill ${sentClass} text-xs font-bold`;
+            sentimentPill.textContent = sentiment;
+        }
+        if (aspectTag) aspectTag.textContent = data.primary_aspect || (data.aspects_breakdown && data.aspects_breakdown[0]?.aspect) || "General Experience";
+        if (confMeter) confMeter.textContent = `${(data.confidence_score * 100).toFixed(1)}%`;
+        if (urgencyTag) urgencyTag.textContent = data.actionable_insights?.urgency || "Standard";
+        if (leadTarget) leadTarget.textContent = data.actionable_insights?.lead_target || "Department Chair";
+    } catch (err) {
+        showToast("error", "Inference Error", err.message || "Failed to analyze feedback.");
+    } finally {
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+    }
+}

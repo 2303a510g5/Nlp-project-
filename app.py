@@ -30,4 +30,5 @@ if __name__ == '__main__':
     print(f" Student Feedback Analyzer - Enterprise NLP Portal")
     print(f" Server active on: http://127.0.0.1:{port}")
     print(f"=======================================================\n")
-    app.run(host='0.0.0.0', port=port, debug=True)
+    debug_mode = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host='0.0.0.0', port=port, debug=debug_mode, use_reloader=debug_mode)
